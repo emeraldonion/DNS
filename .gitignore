@@ -1,2 +1,5 @@
 # JetBrains
 .idea/
+
+# Ansible hosts
+hosts.yml
