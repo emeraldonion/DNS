@@ -1,2 +1,5 @@
 dns:
   hostname: dns.emeraldonion.org
+
+vendor:
+  dnsproxy-version: v0.34.1

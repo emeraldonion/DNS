@@ -21,7 +21,7 @@
 
 - name: Download dnsproxy
   get_url:
-    url: https://github.com/AdguardTeam/dnsproxy/releases/download/v0.34.1/dnsproxy-freebsd-amd64-v0.34.1.tar.gz
+    url: "https://github.com/AdguardTeam/dnsproxy/releases/download/{{ vendor['dnsproxy-version'] }}/dnsproxy-freebsd-amd64-{{ vendor['dnsproxy-version'] }}.tar.gz"
     dest: /tmp/dnsproxy.tgz
 
 - name: Extract dnsproxy
