@@ -1,6 +1,6 @@
 - name: Install
   hosts: all
-  vars_files: vars.yaml
+  vars_files: vars.yml
   roles:
     - install
   tasks:
