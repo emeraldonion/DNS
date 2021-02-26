@@ -1,0 +1,20 @@
+- name: Install dependencies
+  pkgng:
+    name: nginx,unbound
+    state: present
+
+- name: Remove default unbound config
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/unbound/unbound.conf.d/
+
+- name: Remove default nginx config
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/nginx/sites-enabled/
+    - /etc/nginx/sites-available/
+    - /etc/nginx/conf.d/
