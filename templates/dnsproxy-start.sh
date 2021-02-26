@@ -7,5 +7,5 @@
   --https-port=8443 \
   --tls=port=8053 \
   --quic-port=8784 \
-  --tls-crt=/opt/eodns/certificates/cert.pem \
-  --tls-key=/opt/eodns/certificates/key.pem
+  --tls-crt=/opt/eodns/internal-cert.pem \
+  --tls-key=/opt/eodns/internal-key.pem
