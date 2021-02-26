@@ -7,5 +7,5 @@
   --https-port=8443 \
   --tls=port=8053 \
   --quic-port=8784 \
-  --tls-crt=/opt/eodns/internal-cert.pem \
-  --tls-key=/opt/eodns/internal-key.pem
+  --tls-crt=/etc/letsencrypt/live/{{ dns["hostname"] }}/cert.pem \
+  --tls-key=/etc/letsencrypt/live/{{ dns["hostname"] }}/privkey.pem
