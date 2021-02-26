@@ -18,3 +18,19 @@
     - /etc/nginx/sites-enabled/
     - /etc/nginx/sites-available/
     - /etc/nginx/conf.d/
+
+- name: Download dnsproxy
+  get_url:
+    url: https://github.com/AdguardTeam/dnsproxy/releases/download/v0.34.1/dnsproxy-freebsd-amd64-v0.34.1.tar.gz
+    dest: /tmp/dnsproxy.tgz
+
+- name: Extract dnsproxy
+  unarchive:
+    src: /tmp/dnsproxy.tgz
+    dest: /tmp/
+
+- name: Move dnsproxy to path
+  copy:
+    remote_src: true
+    src: /tmp/dnsproxy
+    dest: /usr/bin/dnsproxy
