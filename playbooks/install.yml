@@ -27,3 +27,17 @@
         name: nginx
         state: reloaded
       when: nginx_config.changed
+
+    - name: Create eodns directory
+      file:
+        path: /opt/eodns/
+        state: directory
+
+    - name: Check if internal cert exists
+      stat:
+        path: /opt/eodns/internal-cert.pem
+      register: internal_cert_result
+
+    - name: Generate local TLS cert
+      shell: openssl req -x509 -newkey rsa:1024 -sha256 -days 182500 -nodes -keyout /opt/eodns/internal-key.pem -out /opt/eodns/internal-cert.pem -subj "/CN=localhost"
+      when: not interal_cert_result.stat.exists
