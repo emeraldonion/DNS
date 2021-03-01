@@ -1,0 +1,49 @@
+- name: Add dnsproxy group
+  become: true
+  group:
+    name: dnsproxy
+    state: present
+
+- name: Add dnsproxy user
+  become: true
+  user:
+    name: dnsproxy
+    group: dnsproxy
+    shell: /bin/bash
+    create_home: true
+
+- name: Clone dnsproxy
+  become: true
+  git:
+    repo: https://github.com/natesales/dnsproxy
+    dest: /home/dnsproxy/dnsproxy
+    version: master
+
+- name: Build dnsproxy
+  become: true
+  shell: /usr/local/go/bin/go build
+  args:
+    chdir: /home/dnsproxy/dnsproxy/
+    creates: dnsproxy
+
+- name: Copy dnsproxy default
+  become: true
+  template:
+    src: dnsproxy
+    dest: /etc/default/dnsproxy
+  register: dnsproxy_default
+
+- name: Copy dnsproxy service
+  become: true
+  template:
+    src: dnsproxy.service
+    dest: /lib/systemd/system/dnsproxy.service
+  register: dnsproxy_service
+
+- name: Restart service
+  become: true
+  systemd:
+    service: dnsproxy
+    daemon_reload: true
+    state: restarted
+  when: dnsproxy_service.changed or dnsproxy_default.changed

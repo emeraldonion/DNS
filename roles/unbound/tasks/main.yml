@@ -1,0 +1,28 @@
+- name: Install unbound
+  become: true
+  apt:
+    name: unbound
+    state: present
+  register: hello
+
+- name: Remove default unbound config
+  become: true
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/unbound/unbound.conf.d/
+
+- name: Copy unbound config
+  become: true
+  template:
+    src: unbound.conf
+    dest: /etc/unbound/unbound.conf
+  register: unbound_config
+
+- name: Reload unbound
+  become: true
+  systemd:
+    name: unbound
+    state: reloaded
+  when: unbound_config.changed
