@@ -1,0 +1,20 @@
+[Unit]
+Description=DNS Proxy Service
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+User=dnsproxy
+Group=dnsproxy
+EnvironmentFile=/etc/default/dnsproxy
+ExecStart=/home/dnsproxy/dnsproxy/dnsproxy $DNSPROXY_OPTS
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+ProtectKernelLogs=yes
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
+RestrictNamespaces=yes
+
+[Install]
+WantedBy=multi-user.target
