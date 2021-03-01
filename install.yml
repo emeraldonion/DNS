@@ -4,3 +4,4 @@
     - system
     - unbound
     - dnsproxy
+    - verify

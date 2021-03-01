@@ -1,0 +1,12 @@
+- name: Check service status
+  command: systemctl status "{{ item }}"
+  with_items:
+    - unbound
+    - dnsproxy
+  register: result
+  ignore_errors: yes
+
+- name: Check unbound DNS query
+  shell: dig +short TXT id.server chaos @localhost -p 5353 | tr -d '"'
+  register: this
+  failed_when: this.stdout != inventory_hostname
