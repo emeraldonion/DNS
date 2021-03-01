@@ -1,5 +1,7 @@
 # JetBrains
 .idea/
 
-# Ansible hosts
+# Ansible
 hosts.yml
+hosts
+*.retry
