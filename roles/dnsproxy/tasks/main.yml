@@ -48,6 +48,12 @@
     dest: /lib/systemd/system/dnsproxy.service
   register: dnsproxy_service
 
+- name: Increase receive memory for large UDP buffers
+  sysctl:
+    name: net.core.rmem_max
+    value: "2500000"
+    sysctl_set: yes
+
 - name: Restart service
   become: true
   systemd:
