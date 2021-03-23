@@ -13,14 +13,26 @@
     create_home: true
 
 - name: Download dnsproxy
+  become: true
   get_url:
     url: https://github.com/AdguardTeam/dnsproxy/releases/download/v0.36.0/dnsproxy-linux-amd64-v0.36.0.tar.gz
     dest: /home/dnsproxy/dnsproxy.tgz
 
 - name: Unpack dnsproxy
+  become: true
   unarchive:
     src: /home/dnsproxy/dnsproxy.tgz
-    dest: /home/dnsproxy/dnsproxy
+    dest: /tmp/
+    remote_src: true
+
+- name: Move dnsproxy binary
+  become: true
+  command: mv /tmp/linux-amd64/dnsproxy /usr/bin/dnsproxy
+
+- name: Cleanup extra files
+  file:
+    path: /tmp/linux-amd64
+    state: absent
 
 - name: Copy dnsproxy default
   become: true
