@@ -1,7 +1,6 @@
 - name: Install
   hosts: all
   roles:
-    - system
     - unbound
     - dnsproxy
     - verify

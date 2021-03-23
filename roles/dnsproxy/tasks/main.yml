@@ -12,19 +12,15 @@
     shell: /bin/bash
     create_home: true
 
-- name: Clone dnsproxy
-  become: true
-  git:
-    repo: https://github.com/natesales/dnsproxy
-    dest: /home/dnsproxy/dnsproxy
-    version: master
+- name: Download dnsproxy
+  get_url:
+    url: https://github.com/AdguardTeam/dnsproxy/releases/download/v0.36.0/dnsproxy-linux-amd64-v0.36.0.tar.gz
+    dest: /home/dnsproxy/dnsproxy.tgz
 
-- name: Build dnsproxy
-  become: true
-  shell: /usr/local/go/bin/go build
-  args:
-    chdir: /home/dnsproxy/dnsproxy/
-    creates: dnsproxy
+- name: Unpack dnsproxy
+  unarchive:
+    src: /home/dnsproxy/dnsproxy.tgz
+    dest: /home/dnsproxy/dnsproxy
 
 - name: Copy dnsproxy default
   become: true

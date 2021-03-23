@@ -1,6 +1,0 @@
-- name: Get golang
-  unarchive:
-    src: https://golang.org/dl/go1.16.linux-amd64.tar.gz
-    dest: /usr/local/
-    remote_src: yes
-    creates: /usr/local/go/
