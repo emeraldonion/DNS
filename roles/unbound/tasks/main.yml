@@ -3,7 +3,6 @@
   apt:
     name: unbound
     state: present
-  register: hello
 
 - name: Remove default unbound config
   become: true
@@ -20,9 +19,9 @@
     dest: /etc/unbound/unbound.conf
   register: unbound_config
 
-- name: Reload unbound
+- name: Restart unbound
   become: true
   systemd:
     name: unbound
-    state: reloaded
+    state: restarted
   when: unbound_config.changed
