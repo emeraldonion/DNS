@@ -3,6 +3,7 @@
   with_items:
     - unbound
     - dnsproxy
+    - bird
   register: result
   ignore_errors: yes
   changed_when: false
