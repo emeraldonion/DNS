@@ -12,11 +12,18 @@
     shell: /bin/bash
     create_home: true
 
+- name: Check if dnsproxy binary exists
+  shell: "which dnsproxy"
+  ignore_errors: true
+  changed_when: false
+  register: dnsproxy_exist
+
 - name: Download dnsproxy
   become: true
   get_url:
     url: https://github.com/AdguardTeam/dnsproxy/releases/download/v0.36.0/dnsproxy-linux-amd64-v0.36.0.tar.gz
     dest: /home/dnsproxy/dnsproxy.tgz
+  when: dnsproxy_exist.rc != 0
 
 - name: Unpack dnsproxy
   become: true
@@ -24,15 +31,18 @@
     src: /home/dnsproxy/dnsproxy.tgz
     dest: /tmp/
     remote_src: true
+  when: dnsproxy_exist.rc != 0
 
 - name: Move dnsproxy binary
   become: true
   command: mv /tmp/linux-amd64/dnsproxy /usr/bin/dnsproxy
+  when: dnsproxy_exist.rc != 0
 
 - name: Cleanup extra files
   file:
     path: /tmp/linux-amd64
     state: absent
+  when: dnsproxy_exist.rc != 0
 
 - name: Copy dnsproxy default
   become: true
