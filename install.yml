@@ -3,4 +3,5 @@
   roles:
     - unbound
     - dnsproxy
+    - bcg
     - verify
