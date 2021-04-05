@@ -66,10 +66,18 @@
     sysctl_set: yes
 
 - name: Disable systemd-resolved
+  become: true
   systemd:
     name: systemd-resolved
     enabled: false
     state: stopped
+
+- name: Start dnsproxy
+  become: true
+  systemd:
+    name: dnsproxy
+    enabled: true
+    state: started
 
 - name: Restart service
   become: true
