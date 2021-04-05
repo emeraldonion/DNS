@@ -21,7 +21,7 @@
 - name: Download dnsproxy
   become: true
   get_url:
-    url: https://github.com/AdguardTeam/dnsproxy/releases/download/v0.36.0/dnsproxy-linux-amd64-v0.36.0.tar.gz
+    url: https://github.com/AdguardTeam/dnsproxy/releases/download/v0.37.0/dnsproxy-linux-amd64-v0.37.0.tar.gz
     dest: /home/dnsproxy/dnsproxy.tgz
   when: dnsproxy_exist.rc != 0
 
@@ -64,6 +64,12 @@
     name: net.core.rmem_max
     value: "2500000"
     sysctl_set: yes
+
+- name: Disable systemd-resolved
+  systemd:
+    name: systemd-resolved
+    enabled: false
+    state: stopped
 
 - name: Restart service
   become: true
