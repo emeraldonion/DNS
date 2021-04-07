@@ -4,6 +4,14 @@ The Emerald Onion Anycast Public Recursive Name Server (APRNS) is a privacy-resp
 
 ### How To
 
+#### Chrome
+
+1. Go to Settings
+2. Type "DNS" in "Search Settings" at the top
+3. Click Security
+4. Enable "Use secure DNS"
+5. Select with "Custom" and enter `https://dns.emeraldonion.org/dns-query`
+
 | Protocol       | URI                                | DNS Stamp                                                           | Spec                                                                                       |
 |----------------|------------------------------------|---------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
 | DNS over TLS   | `tls://dns.emeraldonion.org:853`   | `sdns://AwcAAAAAAAAAAAAUZG5zLmVtZXJhbGRvbmlvbi5vcmc`                | [RFC 7858](https://tools.ietf.org/html/rfc7858)                                            |
@@ -22,13 +30,7 @@ All 3 supported protocols provide a layer of transport security to protect DNS q
 
 ### Advanced: Emerald Onion APRNS Configuration
 
-#### Chrome
-
-1. Go to Settings
-2. Type "DNS" in "Search Settings" at the top
-3. Click Security
-4. Enable "Use secure DNS"
-5. Select with "Custom" and enter `https://dns.emeraldonion.org/dns-query`
+stuff
 
 ### Legal
 
