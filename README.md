@@ -1,8 +1,6 @@
-# PRNS (alpha!)
+# Anycast Public Recursive Name Server
 
-Emerald Onion's Public Recursive Name Server
-
-The Emerald Onion Public Recursive Name Server is a public privacy-respecting DNS resolver using modern encrypted DNS protocols (DoT, DoH, and DoQ). Per the [legal FAQ](https://emeraldonion.org/faq/), Emerald Onion does not log network information.
+The Emerald Onion Anycast Public Recursive Name Server (APRNS) is a public privacy-respecting DNS resolver using modern encrypted DNS protocols (DoT, DoH, and DoQ). Per the [legal FAQ](https://emeraldonion.org/faq/), Emerald Onion does not log network information.
 
 The hostname for all protocols is `dns.emeraldonion.org` and is currently hosted out of Seattle, WA.
 
