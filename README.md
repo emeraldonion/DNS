@@ -1,11 +1,16 @@
 # Anycast Public Recursive Name Server
 
-The Emerald Onion Anycast Public Recursive Name Server (APRNS) is a public privacy-respecting DNS resolver using modern encrypted DNS protocols (DoT, DoH, and DoQ). Per the [legal FAQ](https://emeraldonion.org/faq/), Emerald Onion does not log network information.
-
-The hostname for all protocols is `dns.emeraldonion.org` and is currently hosted out of Seattle, WA.
-
+The Emerald Onion Anycast Public Recursive Name Server (APRNS) is a privacy-respecting DNS resolver using modern, encrypted DNS protocols (DoT, DoH, and DoQ).
 
 ### How To
+
+#### Chrome
+
+1. Go to Settings
+2. Type "DNS" in "Search Settings" at the top
+3. Click Security
+4. Enable "Use secure DNS"
+5. Select with "Custom" and enter `https://dns.emeraldonion.org/dns-query`
 
 | Protocol       | URI                                | DNS Stamp                                                           | Spec                                                                                       |
 |----------------|------------------------------------|---------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
@@ -26,3 +31,15 @@ All 3 supported protocols provide a layer of transport security to protect DNS q
 ### Advanced: Emerald Onion APRNS Configuration
 
 stuff
+
+### Legal
+
+Per the [legal FAQ](https://emeraldonion.org/faq/), Emerald Onion does not log network information. To report abuse, please contact [Abuse](mailto:abuse@emeraldonion.org).
+
+### Donate
+
+Emerald Onion is 100% volunteer-run, and 100% of donations go to business administration and insurrance, hardware, bandwidth, and co-location. Please consider becoming a monthly donor using [Github Sponsors](https://github.com/sponsors/emeraldonion)!
+
+Other donation methods are available here: [emeraldonion.org/donate](https://emeraldonion.org/donate/)
+
+Emerald Onion is a U.S. 501(c)(3) nonprofit, tax ID #82-2009438. Contributions are tax deductible as allowed by law.
