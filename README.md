@@ -32,7 +32,7 @@ All 3 supported protocols provide a layer of transport security to protect DNS q
 
 We're using [dnsproxy](https://github.com/AdguardTeam/dnsproxy) to proxy DoT, DoH, and DoQ queries to [unbound](https://github.com/NLnetLabs/unbound) as the resolver. On the networking side, we use [BIRD](https://gitlab.nic.cz/labs/bird/tree/master) as a BGP daemon automated with [bcg](https://github.com/natesales/bcg) which converts a simple YAML file into BIRD configs with filtering for IRR, RPKI, and max-prefix limits. Each DNS server announces the same routes making this an anycast service that can be easily scaled out by adding more servers.
 
-If you're interested in running your own service like this, this repo can serve as a quick way to get started. Just edit the Ansible [hosts file](https://github.com/emeraldonion/APRNS/blob/main/hosts.yml) to contain a list of your DNS servers and BGP configuration, and run `ansible-playbook -i hosts.yml install.yml`. Ansible will install and configure the DNS server with unbound and dnsproxy, and set up BGP session with BIRD+BCG according to the `bcg` key in your Ansible hosts file. A TLS certificate is required as well (DoT, DoH, and DoQ use TLS), so specify the path to your cert and key in the `vars` section of `hosts.yml`.
+If you're interested in running your own service like this, this repo can serve as a quick way to get started. Just edit the Ansible [hosts file](https://github.com/emeraldonion/APRNS/blob/main/hosts.yml) to contain a list of your DNS servers and BGP configuration, and run `ansible-playbook -i hosts.yml install.yml`. Ansible will install and configure the DNS server with unbound and dnsproxy, and set up BGP session with BIRD and BCG according to the `bcg` key in your Ansible hosts file. A TLS certificate is required as well (DoT, DoH, and DoQ use TLS), so specify the path to your cert and key in the `vars` section of `hosts.yml`.
 
 ### Legal
 
@@ -40,7 +40,7 @@ Per the [legal FAQ](https://emeraldonion.org/faq/), Emerald Onion does not log n
 
 ### Donate
 
-Emerald Onion is 100% volunteer-run, and 100% of donations go to business administration and insurrance, hardware, bandwidth, and co-location. Please consider becoming a monthly donor using [Github Sponsors](https://github.com/sponsors/emeraldonion)!
+Emerald Onion is 100% volunteer-run, and 100% of donations go to business administration and insurance, hardware, bandwidth, and co-location. Please consider becoming a monthly donor using [Github Sponsors](https://github.com/sponsors/emeraldonion)!
 
 Other donation methods are available here: [emeraldonion.org/donate](https://emeraldonion.org/donate/)
 
