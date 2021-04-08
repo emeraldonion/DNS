@@ -4,6 +4,14 @@ The Emerald Onion public recursive name server (DNS resolver) is a privacy-respe
 
 ### How To
 
+#### Firefox
+
+1. Go to Preferences
+2. Type "DNS" in "Find in Preferences" at the top
+3. Click Network Settings
+4. Enable "DNS over HTTPS"
+5. Use provider "Custom" and enter `https://dns.emeraldonion.org/dns-query`
+
 #### Chrome
 
 1. Go to Settings
