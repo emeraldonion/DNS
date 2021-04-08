@@ -47,7 +47,10 @@ All 3 supported protocols provide a layer of transport security to protect DNS q
 
 We're using [dnsproxy](https://github.com/AdguardTeam/dnsproxy) to proxy DoT, DoH, and DoQ queries to [unbound](https://github.com/NLnetLabs/unbound) as the resolver. On the networking side, we use [BIRD](https://gitlab.nic.cz/labs/bird/tree/master) as a BGP daemon automated with [bcg](https://github.com/natesales/bcg) which converts a simple YAML file into BIRD configs with filtering for IRR, RPKI, and max-prefix limits. Each DNS server announces the same routes making this an anycast service that can be easily scaled out by adding more servers.
 
-If you're interested in running your own service like this, this repo can serve as a quick way to get started. Just edit the Ansible [hosts file](https://github.com/emeraldonion/APRNS/blob/main/hosts.yml) to contain a list of your DNS servers, BGP configuration, and TLS certificate paths, and run `ansible-playbook -i hosts.yml install.yml`. Ansible will install and configure the DNS server with unbound and dnsproxy, and set up BGP session with BIRD and BCG according to the `bcg` key in your Ansible hosts file.
+If you're interested in running your own service like this, this repo can serve as a quick way to get started. Just edit the Ansible [hosts file](https://github.com/emeraldonion/APRNS/blob/main/hosts.yml) to contain a list of your DNS servers, BGP configuration, and TLS certificate paths, and run `ansible-playbook -i hosts.yml install.yml`. Ansible will install and configure the DNS server with unbound and dnsproxy, and set up BGP session with BIRD and BCG according to the `bcg` key in your Ansible hosts file. The `hosts.yml` file in this repo contains our production config as a starting place, but you'll have to make a few modifications if you're running your own deployment:
+
+1. Replace `tls_cert` and `tls_key` with the path to your TLS certificate and private key.
+2. Replace the `hosts` key with objects for each of your DNS servers, noting `ansible_host` and `bcg` which takes a raw [bcg](https://github.com/natesales/bcg) config in YAML.
 
 ### Legal
 
