@@ -16,7 +16,13 @@ Emerald Onion's software configurations are pulled directly from [this Github re
 
 1. From your device, download this [DNS Profile](https://github.com/emeraldonion/DNS/raw/main/eo-doh.mobileconfig) in Safari
 2. iOS: Settings > General > Profiles > Emerald Onion DNS-over-HTTPS > Install
-3. macOS: Settings > Profiles > Emerald Onion DNS-over-HTTPS > Install 
+3. macOS: Settings > Profiles > Emerald Onion DNS-over-HTTPS > Install
+
+#### Android 9 (DoT)
+
+1. Open settings
+2. Network & internet > Advanced > Private DNS
+3. Choose Private DNS provider hostname and enter `dns.emeraldonion.org`
 
 #### Firefox (DoH)
 
