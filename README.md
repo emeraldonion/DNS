@@ -1,6 +1,6 @@
 # Emerald Onion's Encrypted DNS Resolver
 
-The Emerald Onion public recursive name server (aka DNS resolver) is a privacy-respecting DNS service offering modern, encrypted DNS protocols: `DNS-over-TLS (DoT)`, `DNS-over-HTTPS (DoH)`, and `DNS-over-QUIC (DoQ)`. We have configured dnsproxy and unbound with specific privacy controls:
+The Emerald Onion public recursive name server (aka DNS resolver) is a privacy-respecting DNS service offering modern, encrypted DNS protocols: `DNS-over-TLS (DoT)`, `DNS-over-HTTPS (DoH)`, and `DNS-over-QUIC (DoQ)`. We have configured [dnsproxy](https://github.com/AdguardTeam/dnsproxy) and [unbound](https://www.nlnetlabs.nl/projects/unbound/about/) with specific privacy controls:
 
 1. `DoT`, `DoH`, and `DoQ` TLS-based transport encryption ensures that your ISP cannot see your DNS queries.
 2. IP connection data and metadata logging has been disabled completely. No IP logs exist at Emerald Onion's edge, firewall, `dnsproxy` syslog, or `unbound` syslog.
