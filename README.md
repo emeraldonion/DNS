@@ -51,6 +51,8 @@ All 3 supported protocols provide a layer of transport security to protect DNS q
 - DoH is the most widely supported protocol where browsers such as Firefox have built-in DoH support.
 - DoQ is the newest protocol and uses the modern QUIC transport protocol.
 
+Emerald Onion does not offer vulnerable DNS-over-UDP services.
+
 ### Emerald Onion's Server-Side Configuration
 
 We're using [dnsproxy](https://github.com/AdguardTeam/dnsproxy) to proxy DoT, DoH, and DoQ queries to [unbound](https://github.com/NLnetLabs/unbound) as the resolver. On the networking side, we use [BIRD](https://gitlab.nic.cz/labs/bird/tree/master) as a BGP daemon automated with [bcg](https://github.com/natesales/bcg) which converts a simple YAML file into BIRD configs with filtering for IRR, RPKI, and max-prefix limits. Each DNS server announces the same routes making this an anycast service that can be easily scaled out by adding more servers.
