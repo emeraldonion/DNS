@@ -1,6 +1,6 @@
-# Anycast Public Recursive Name Server
+# Emerald Onion's Encrypted DNS Resolver
 
-The Emerald Onion Anycast Public Recursive Name Server (APRNS) is a privacy-respecting DNS resolver using modern, encrypted DNS protocols (DoT, DoH, and DoQ).
+The Emerald Onion public recursive name server (DNS resolver) is a privacy-respecting DNS service offering modern, encrypted DNS protocols: DoT, DoH, and DoQ.
 
 ### How To
 
