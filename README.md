@@ -6,7 +6,7 @@ The Emerald Onion public recursive name server (aka DNS resolver) is a privacy-r
 2. IP connection data and metadata logging has been disabled completely. No IP logs exist at Emerald Onion's edge, firewall, `dnsproxy` syslog, or `unbound` syslog.
 3. DNS query data and metadata logging has been disabled completely. This includes disabling `unbound-control` to prevent the possibility of exposing unbound's in-memory data to the Emerald Onion admins.
 4. A DNS caching resolver offers inherent privacy due to the fact that if another user requested DNS information before you, and the validity time has not expired, then the DNS service will not transmit another upstream request for the data. This makes it more difficult for network adversaries to track users.
-5. `QNAME Minimization` assures that upstream DNS services are not sent end-user data from the DNS resolver.
+5. [QNAME minimization](https://www.isc.org/blogs/qname-minimization-and-privacy/) assures that upstream DNS services are only sent the minimum amount of data necessary to perform DNS resolution.
 
 Emerald Onion's software configurations are pulled directly from [this Github repo](https://github.com/emeraldonion/DNS/tree/main/templates), so users can validate for themselves that these privacy settings are enforced. This public DNS service is shared by [Emerald Onion's Tor exit relays](https://metrics.torproject.org/rs.html#search/as:396507), meaning that Tor user's queries are blended with non-Tor exit user's queries, further enhancing DNS privacy.
 
