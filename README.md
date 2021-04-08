@@ -1,10 +1,18 @@
 # Emerald Onion's Encrypted DNS Resolver
 
-The Emerald Onion public recursive name server (DNS resolver) is a privacy-respecting DNS service offering modern, encrypted DNS protocols: DoT, DoH, and DoQ.
+The Emerald Onion public recursive name server (aka DNS resolver) is a privacy-respecting DNS service offering modern, encrypted DNS protocols: `DNS-over-TLS (DoT)`, `DNS-over-HTTPS (DoH)`, and `DNS-over-QUIC (DoQ)`. We have configured [dnsproxy](https://github.com/AdguardTeam/dnsproxy) and [unbound](https://www.nlnetlabs.nl/projects/unbound/about/) with specific privacy controls:
 
-### How To
+1. `DoT`, `DoH`, and `DoQ` TLS-based transport encryption ensures that your ISP cannot see your DNS queries.
+2. IP connection data and metadata logging has been disabled completely. No IP logs exist at Emerald Onion's edge, firewall, `dnsproxy` syslog, or `unbound` syslog.
+3. DNS query data and metadata logging has been disabled completely. This includes disabling `unbound-control` to prevent the possibility of exposing unbound's in-memory data to the Emerald Onion admins.
+4. A DNS caching resolver offers inherent privacy due to the fact that if another user requested DNS information before you, and the validity time has not expired, then the DNS service will not transmit another upstream request for the data. This makes it more difficult for network adversaries to track users.
+5. [QNAME minimization](https://www.isc.org/blogs/qname-minimization-and-privacy/) assures that upstream DNS services are only sent the minimum amount of data necessary to perform DNS resolution.
 
-#### Firefox
+Emerald Onion's software configurations are pulled directly from [this Github repo](https://github.com/emeraldonion/DNS/tree/main/templates), so users can validate for themselves that these privacy settings are enforced. This public DNS service is shared by [Emerald Onion's Tor exit relays](https://metrics.torproject.org/rs.html#search/as:396507), meaning that Tor user's queries are blended with non-Tor exit user's queries, further enhancing DNS privacy.
+
+### How To Use
+
+#### Firefox (DoH)
 
 1. Go to Preferences
 2. Type "DNS" in "Find in Preferences" at the top
@@ -12,7 +20,7 @@ The Emerald Onion public recursive name server (DNS resolver) is a privacy-respe
 4. Enable "DNS over HTTPS"
 5. Use provider "Custom" and enter `https://dns.emeraldonion.org/dns-query`
 
-#### Chrome
+#### Chrome (DoH)
 
 1. Go to Settings
 2. Type "DNS" in "Search Settings" at the top
@@ -42,6 +50,8 @@ All 3 supported protocols provide a layer of transport security to protect DNS q
 - DoT is the simplest protocol using only an additional TLS layer on top of DNS.
 - DoH is the most widely supported protocol where browsers such as Firefox have built-in DoH support.
 - DoQ is the newest protocol and uses the modern QUIC transport protocol.
+
+Emerald Onion does not offer vulnerable DNS-over-UDP services.
 
 ### Emerald Onion's Server-Side Configuration
 
