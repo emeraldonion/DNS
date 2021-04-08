@@ -15,6 +15,8 @@ ProtectKernelLogs=yes
 ProtectKernelModules=yes
 ProtectKernelTunables=yes
 RestrictNamespaces=yes
+StandardOutput=null
+StandardError=null
 
 [Install]
 WantedBy=multi-user.target
