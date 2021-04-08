@@ -12,6 +12,12 @@ Emerald Onion's software configurations are pulled directly from [this Github re
 
 ### How To Use
 
+#### iOS 14 and macOS Big Sur (DoH)
+
+1. From your device, download this [DNS Profile](https://github.com/emeraldonion/DNS/raw/main/eo-doh.mobileconfig) in Safari
+2. iOS: Settings > General > Profiles > Emerald Onion DNS-over-HTTPS > Install
+3. macOS: Settings > Profiles > Emerald Onion DNS-over-HTTPS > Install 
+
 #### Firefox (DoH)
 
 1. Go to Preferences
