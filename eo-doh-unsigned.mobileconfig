@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>HTTPS</string>
+				<key>ServerAddresses</key>
+				<array>
+					<string>2620:18c:2::2</string>
+					<string>2620:18c:2::3</string>
+					<string>103.232.207.2</string>
+					<string>103.232.207.3</string>
+				</array>
+				<key>ServerURL</key>
+				<string>https://dns.emeraldonion.org/dns-query</string>
+			</dict>
+			<key>PayloadDescription</key>
+			<string>Configures device to use EmeraldOnion DoH</string>
+			<key>PayloadDisplayName</key>
+			<string>EmeraldOnion DoH</string>
+			<key>PayloadIdentifier</key>
+			<string>com.apple.dnsSettings.managed.e8e2de70-0b38-4397-989a-0df81aaa5c46</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>14a9925b-f906-4427-9703-709aa9344391</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>ProhibitDisablement</key>
+			<false/>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>Configure device to use Emerald Onion DNS-Over-HTTPS</string>
+	<key>PayloadDisplayName</key>
+	<string>Emerald Onion DNS-Over-HTTPS</string>
+	<key>PayloadIdentifier</key>
+	<string>org.emeraldonion.dns-over-https</string>
+	<key>PayloadRemovalDisallowed</key>
+	<false/>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>A467A678-1EEE-4A57-8889-FBAD1229995C</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>
