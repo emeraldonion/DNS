@@ -12,6 +12,15 @@ The Emerald Onion public recursive name server (DNS resolver) is a privacy-respe
 4. Enable "Use secure DNS"
 5. Select with "Custom" and enter `https://dns.emeraldonion.org/dns-query`
 
+#### Local proxy with Docker
+
+If your system doesn't support DoT, DoH, or DoQ and you don't want to change your stub resolver, you can use our [Docker image for dnsproxy](https://github.com/emeraldonion/docker-dnsproxy) which supports all 3 protocols.
+
+1. Create and start the container: `docker run -p 127.0.53.53:53:53/udp emeraldonion/docker-dnsproxy`
+2. Update your DNS server to 127.0.53.53
+
+### Protocols
+
 | Protocol       | URI                                | DNS Stamp                                                           | Spec                                                                                       |
 |----------------|------------------------------------|---------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
 | DNS over TLS   | `tls://dns.emeraldonion.org:853`   | `sdns://AwcAAAAAAAAAAAAUZG5zLmVtZXJhbGRvbmlvbi5vcmc`                | [RFC 7858](https://tools.ietf.org/html/rfc7858)                                            |
