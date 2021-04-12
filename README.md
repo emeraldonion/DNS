@@ -47,20 +47,6 @@ If your system doesn't support DoT, DoH, or DoQ and you don't want to change you
 1. Create and start the container: `docker run -p 127.0.53.53:53:53/udp emeraldonion/docker-dnsproxy`
 2. Update your DNS server to 127.0.53.53
 
-#### FreeBSD / HardenedBSD (DoT)
-
-`# sysrc local_unbound_enable="YES" `
-
-`# sysrc local_unbound_forwarders="103.232.207.2#dns.emeraldonion.org 103.232.207.3#dns.emeraldonion.org" ` (see Note)
-
-`# sysrc local_unbound_tls="YES" `
-
-`# service local_unbound start `
-
-Note: Emerald Onion does not recommend that our newly created DNS services be used for production environments. We do recommend redundancy, so please consider using additional resolvers for if and when Emerald Onion is not accessible.
-
-`# sysrc local_unbound_forwarders="103.232.207.2#dns.emeraldonion.org 103.232.207.3#dns.emeraldonion.org 1.1.1.1@853#cloudflare-dns.com 1.0.0.0@853#cloudflare-dns.com 9.9.9.9@853#dns.quad9.net 149.112.112.112@853#dns.quad9.net 2620:18c:2::2#dns.emeraldonion.org 2620:18c:2::3#dns.emeraldonion.org 2606:4700:4700::1111@853#cloudflare-dns.com 2606:4700:4700::1001@853#cloudflare-dns.com 2620:fe::fe@853#dns.quad9.net 2620:fe::9@853#dns.quad9.net" `
-
 ### Protocols
 
 - [DNS over TLS](https://tools.ietf.org/html/rfc7858) : `tls://dns.emeraldonion.org:853`
