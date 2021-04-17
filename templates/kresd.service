@@ -1,0 +1,19 @@
+[Unit]
+Description=Knot Resolver daemon
+Documentation=man:kresd.systemd(7)
+Documentation=man:kresd(8)
+
+[Service]
+Type=notify
+WorkingDirectory=/var/cache/knot-resolver
+ExecStart=/usr/sbin/kresd --config=/etc/knot-resolver/kresd.conf
+User=knot-resolver
+Restart=on-failure
+Sockets=kresd.socket
+Sockets=kresd-tls.socket
+Sockets=kresd-control@%i.socket
+CapabilityBoundingSet=CAP_NET_RAW CAP_NET_ADMIN CAP_SYS_ADMIN CAP_SYS_RESOURCE
+AmbientCapabilities=CAP_NET_RAW CAP_NET_ADMIN CAP_SYS_ADMIN CAP_SYS_RESOURCE
+
+[Install]
+WantedBy=kresd.target
