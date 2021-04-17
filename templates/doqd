@@ -1,0 +1,5 @@
+DOQD_OPTS="server \
+           --cert=/opt/dns/cert.pem \
+           --key=/opt/dns/key.pem \
+           --upstream=127.0.0.1:53 \
+           --listen=:8853"
