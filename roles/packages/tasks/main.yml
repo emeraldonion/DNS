@@ -1,0 +1,25 @@
+- name: Add natesales apt repo
+  become: true
+  apt_repository:
+    repo: deb [trusted=yes] https://repo.natesales.net/apt /
+    state: present
+
+- name: Install bgpq4
+  become: true
+  apt:
+    deb: https://mirrors.kernel.org/ubuntu/pool/universe/b/bgpq4/bgpq4_0.0.6-2_amd64.deb
+
+- name: Install knot-resolver repo
+  become: true
+  apt:
+    deb: https://secure.nic.cz/files/knot-resolver/knot-resolver-release.deb
+
+- name: Install packages
+  become: true
+  apt:
+    update_cache: true
+    pkg:
+      - bird2
+      - knot-resolver=5.3.1-cznic.1
+      - bcg
+      - doqd

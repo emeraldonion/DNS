@@ -1,21 +1,3 @@
-- name: Add natesales apt repo for bcg
-  become: true
-  apt_repository:
-    repo: deb [trusted=yes] https://repo.natesales.net/apt /
-    state: present
-
-- name: Install bgpq4
-  become: true
-  apt:
-    deb: http://mirrors.kernel.org/ubuntu/pool/universe/b/bgpq4/bgpq4_0.0.6-2_amd64.deb
-
-- name: Install bcg and dependencies
-  become: true
-  apt:
-    pkg:
-      - bird2
-      - bcg
-
 - name: Create bcg directory
   become: true
   file:
