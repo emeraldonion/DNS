@@ -1,7 +1,8 @@
 - name: Install
   hosts: all
   roles:
-    - unbound
-    - dnsproxy
+    - packages
+    - knot-resolver
+    - doqd
     - bcg
     - verify
