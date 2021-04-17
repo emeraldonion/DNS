@@ -1,0 +1,28 @@
+- name: Copy kresd.conf
+  become: true
+  template:
+    src: kresd.conf
+    dest: /etc/knot-resolver/kresd.conf
+  register: kresd_config
+
+- name: Copy kresd@.service
+  become: true
+  template:
+    src: kresd.service
+    dest: /lib/systemd/system/kresd@.service
+  register: kresd_service
+
+- name: Restart kresd
+  become: true
+  systemd:
+    daemon_reload: true
+    name: kresd@1.service
+    state: restarted
+  when: kresd_config.changed or kresd_service.changed
+
+- name: Enable and start kresd
+  become: true
+  systemd:
+    name: kresd@1.service
+    state: started
+    enabled: true
