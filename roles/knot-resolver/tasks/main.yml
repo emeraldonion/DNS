@@ -1,3 +1,12 @@
+- name: Mount tmpfs
+  become: true
+  mount:
+    name: /var/cache/knot-resolver
+    src: tmpfs
+    fstype: tmpfs
+    opts: "rw,size={{ cache_size+1 }}G,uid=knot-resolver,gid=knot-resolver,nosuid,nodev,noexec,mode=0700"
+    state: present
+
 - name: Copy kresd.conf
   become: true
   template:
