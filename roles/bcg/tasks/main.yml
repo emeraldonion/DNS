@@ -7,7 +7,7 @@
 - name: Copy bcg config
   become: true
   copy:
-    content: "{{ bcg }}"
+    content: "{{ dict(bcg, prefixes=ips | map('ipsubnet') | list) }}"
     dest: /etc/bcg/config.json
   register: bcg
 
