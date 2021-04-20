@@ -1,21 +1,39 @@
 - name: Check service status
   command: systemctl status "{{ item }}"
   with_items:
-    - unbound
-    - dnsproxy
+    - kresd@1
+    - doqd
     - bird
   register: result
   ignore_errors: yes
   changed_when: false
 
-- name: Check unbound DNS query
-  shell: dig +short TXT id.server chaos @localhost -p 5353 | tr -d '"'
+- name: Check IPv4 NSID query
+  shell: dig -4 +nsid | grep NSID
   register: this
-  failed_when: this.stdout != inventory_hostname
+  failed_when: "not (inventory_hostname in this.stdout and 'dns.emeraldonion.org' in this.stdout)"
   changed_when: false
 
-- name: Check dnsproxy UDP DNS query
-  shell: dig +short TXT id.server chaos @localhost -p 53 | tr -d '"'
+- name: Check IPv6 NSID query
+  shell: dig -6 +nsid | grep NSID
   register: this
-  failed_when: this.stdout != inventory_hostname
+  failed_when: "not (inventory_hostname in this.stdout and 'dns.emeraldonion.org' in this.stdout)"
+  changed_when: false
+
+- name: Check DNSSEC OK query
+  shell: dig +short sigok.verteiltesysteme.net
+  register: this
+  failed_when: "'.' not in this.stdout"
+  changed_when: false
+
+- name: Check DNSSEC FAIL query
+  shell: dig +short sigfail.verteiltesysteme.net
+  register: this
+  failed_when: this.stdout != ""
+  changed_when: false
+
+- name: Check QNAME minimization
+  shell: dig +short TXT qnamemintest.internet.nl
+  register: this
+  failed_when: "'QNAME minimisation is enabled' not in this.stdout"
   changed_when: false
