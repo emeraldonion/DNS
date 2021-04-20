@@ -3,7 +3,6 @@
   with_items:
     - kresd@1
     - doqd
-    - bird
   register: result
   ignore_errors: yes
   changed_when: false
@@ -36,4 +35,22 @@
   shell: dig +short TXT qnamemintest.internet.nl
   register: this
   failed_when: "'QNAME minimisation is enabled' not in this.stdout"
+  changed_when: false
+
+- name: Check DoT NSID query
+  shell: kdig +tls +nsid @dns.emeraldonion.org | grep NSID
+  register: this
+  failed_when: "not (inventory_hostname in this.stdout and 'dns.emeraldonion.org' in this.stdout)"
+  changed_when: false
+
+- name: Check DoH NSID query
+  shell: kdig +https +nsid @dns.emeraldonion.org | grep NSID
+  register: this
+  failed_when: "not (inventory_hostname in this.stdout and 'dns.emeraldonion.org' in this.stdout)"
+  changed_when: false
+
+- name: Check DoQ query
+  shell: q dns.emeraldonion.org @quic://dns.emeraldonion.org
+  register: this
+  failed_when: "'dns.emeraldonion.org' not in this.stdout"
   changed_when: false
