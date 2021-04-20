@@ -1,3 +1,22 @@
+- name: Create dummy interface file
+  become: true
+  copy:
+    content: |
+      #!/bin/bash
+      ip link del dev any0
+      ip link add dev any0 type dummy
+      {% for ip in ips %}
+      ip addr add dev any0 {{ ip }}
+      {% endfor %}
+      ip link set dev any0 up
+    dest: /etc/networkd-dispatcher/routable.d/50-ifup-hooks
+  register: iface_config
+
+- name: Apply dummy interface config
+  become: true
+  shell: bash /etc/networkd-dispatcher/routable.d/50-ifup-hooks
+  when: iface_config.changed
+
 - name: Create bcg directory
   become: true
   file:
