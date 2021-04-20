@@ -1,3 +1,11 @@
+- name: Copy root key
+  become: true
+  copy:
+    src: /usr/share/dns/root.key
+    dest: /var/lib/knot-resolver/root.key
+    owner: knot-resolver
+    group: knot-resolver
+
 - name: Mount tmpfs
   become: true
   mount:
