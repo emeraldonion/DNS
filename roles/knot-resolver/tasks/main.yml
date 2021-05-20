@@ -37,6 +37,13 @@
     state: restarted
   when: kresd_config.changed or kresd_service.changed
 
+- name: Disable and stop systemd-resolved
+  become: true
+  systemd:
+    name: systemd-resolved
+    state: stopped
+    enabled: false
+
 - name: Enable and start kresd
   become: true
   systemd:

@@ -26,13 +26,6 @@
     dest: /lib/systemd/system/doqd.service
   register: doqd_service
 
-- name: Disable systemd-resolved
-  become: true
-  systemd:
-    name: systemd-resolved
-    enabled: false
-    state: stopped
-
 - name: Start doqd
   become: true
   systemd:
