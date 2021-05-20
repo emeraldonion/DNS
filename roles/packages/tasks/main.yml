@@ -1,7 +1,7 @@
 - name: Add natesales apt repo for q DNS client
   become: true
   apt_repository:
-    repo: deb [trusted=yes] https://repo.natesales.net/apt /
+    repo: deb [trusted=yes] https://apt.fury.io/natesales/ /
     state: present
 
 - name: Install knot-resolver repo
