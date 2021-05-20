@@ -15,8 +15,9 @@
     update_cache: true
     pkg:
       - q # DNS client for Do{T,Q,H}
-      - knot-resolver=5.3.1-cznic.1
-      - knot-resolver-module-http=5.3.1-cznic.1
+      - knot-dnsutils # kdig DNS client
+      - knot-resolver=5.3.2-cznic.1
+      - knot-resolver-module-http=5.3.2-cznic.1
       - doqd # DNS over QUIC daemon
       - lua-luaossl-dev # SSL/TLS for knot-resolver priming query
       - lua-http # HTTP for knot-resolver priming query
