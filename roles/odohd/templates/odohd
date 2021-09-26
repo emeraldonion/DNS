@@ -1,0 +1,1 @@
+ODOHD_OPTS="--no-tls --listen 127.0.0.1:8081 --resolver 127.0.0.1 --metrics-listen {{ wg.ip }}:8082"
