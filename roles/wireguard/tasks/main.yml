@@ -1,0 +1,36 @@
+- name: Check if private key exists
+  become: true
+  stat:
+    path: /etc/wireguard/private
+  register: wg_private_stat
+
+- name: Generate keypair
+  become: true
+  shell: umask 077 ; wg genkey | tee /etc/wireguard/private | wg pubkey > /etc/wireguard/public
+  when: not wg_private_stat.stat.exists
+
+- name: Read private key
+  become: true
+  command: "cat /etc/wireguard/private"
+  register: wg_private
+
+- name: Create wireguard config
+  become: true
+  template:
+    src: wg0.conf
+    dest: /etc/wireguard/wg0.conf
+  register: wg_config
+
+- name: Enable wg-quick@wg0
+  become: true
+  systemd:
+    name: wg-quick@wg0
+    enabled: true
+    state: started
+
+- name: Restart wg-quick@wg0
+  become: true
+  systemd:
+    name: wg-quick@wg0
+    state: restarted
+  when: wg_config.changed

@@ -1,0 +1,39 @@
+- name: Management
+  hosts: management
+  tasks:
+    - name: Check if private key exists
+      become: true
+      stat:
+        path: /opt/dns/wg-private
+      register: wg_private_stat
+
+    - name: Generate keypair
+      become: true
+      shell: umask 077 ; wg genkey | tee /opt/dns/wg-private | wg pubkey > /opt/dns/wg-public
+      when: not wg_private_stat.stat.exists
+
+    - name: Read private key
+      become: true
+      command: "cat /opt/dns/wg-private"
+      register: wg_private
+
+    - name: Create wireguard config
+      become: true
+      template:
+        src: wg-dns.conf
+        dest: /etc/wireguard/wg-dns.conf
+      register: wg_config
+
+    - name: Enable wg-quick@wg-dns
+      become: true
+      systemd:
+        name: wg-quick@wg-dns
+        enabled: true
+        state: started
+
+    - name: Restart wg-quick@wg-dns
+      become: true
+      systemd:
+        name: wg-quick@wg-dns
+        state: restarted
+      when: wg_config.changed

@@ -21,3 +21,4 @@
       - doqd # DNS over QUIC daemon
       - lua-luaossl-dev # SSL/TLS for knot-resolver priming query
       - lua-http # HTTP for knot-resolver priming query
+      - wireguard
