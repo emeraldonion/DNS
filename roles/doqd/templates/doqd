@@ -2,6 +2,6 @@ DOQD_OPTS="server \
            --compat \
            --cert=/opt/dns/cert.pem \
            --key=/opt/dns/key.pem \
-           --upstream=127.0.0.1:53 \
+           --upstream={{ wg.ip }}:53 \
            --metrics={{ wg.ip }}:8083 \
            {% for ip in ips %}-l [{{ ip }}]:8853 {% endfor %}"
