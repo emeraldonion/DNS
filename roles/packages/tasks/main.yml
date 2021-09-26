@@ -19,6 +19,24 @@
   apt:
     deb: "https://github.com/emeraldonion/odohd/releases/download/v{{ packages.additional.odohd }}/odohd_{{ packages.additional.odohd }}_linux_amd64.deb"
 
+- name: Check if nginx_exporter exists
+    stat:
+      path: /usr/local/bin/nginx_exporter
+    register: nginx_exporter
+
+- name: Install nginx_exporter
+  become: true
+  unarchive:
+    src: https://github.com/nginxinc/nginx-prometheus-exporter/releases/download/v{{ packages.additional.nginx_exporter }}/nginx-prometheus-exporter_{{ packages.additional.nginx_exporter }}_linux_amd64.tar.gz
+    dest: /tmp/
+    remote_src: true
+  when: not nginx_exporter.stat.exists
+
+- name: Move nginx_exporter
+  become: true
+  shell: mv /tmp/nginx-prometheus-exporter /usr/local/bin/nginx_exporter
+  when: not nginx_exporter.stat.exists
+
 - name: Install packages
   become: true
   apt:

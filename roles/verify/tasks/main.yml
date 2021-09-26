@@ -5,6 +5,7 @@
     - doqd
     - odohd
     - nginx
+    - nginx-exporter
   register: result
   ignore_errors: yes
   changed_when: false

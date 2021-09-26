@@ -1,0 +1,17 @@
+[Unit]
+Description=NGINX Prometheus Exporter
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+User=nginxexporter
+Group=nginxexporter
+ExecStart=/usr/local/bin/nginx_exporter -web.listen-address="{{ wg.ip }}:9113" -nginx.scrape-uri=http://127.0.0.1:8084/nginx_status
+ProtectKernelLogs=yes
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
+RestrictNamespaces=yes
+
+[Install]
+WantedBy=multi-user.target

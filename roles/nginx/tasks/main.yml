@@ -1,3 +1,41 @@
+- name: Add nginxexporter group
+  become: true
+  group:
+    name: nginxexporter
+    state: present
+
+- name: Add nginxexporter user
+  become: true
+  user:
+    name: nginxexporter
+    group: nginxexporter
+    shell: /sbin/nologin
+    create_home: false
+
+- name: Copy nginx-exporter service
+  become: true
+  template:
+    src: nginx-exporter.service
+    dest: /lib/systemd/system/nginx-exporter.service
+  register: nginx_exporter_service
+
+- name: Start nginx-exporter
+  become: true
+  systemd:
+    name: nginx-exporter
+    enabled: true
+    state: started
+
+- name: Restart nginx-exporter
+  become: true
+  systemd:
+    service: nginx-exporter
+    daemon_reload: true
+    state: restarted
+  when: nginx_exporter_service.changed
+
+# nginx
+
 - name: Remove default config
   become: true
   file:
