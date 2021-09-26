@@ -1,0 +1,35 @@
+- name: Add node-exporter group
+  become: true
+  group:
+    name: node-exporter
+    state: present
+
+- name: Add node-exporter user
+  become: true
+  user:
+    name: node-exporter
+    group: node-exporter
+    shell: /sbin/nologin
+    create_home: false
+
+- name: Copy node-exporter service
+  become: true
+  template:
+    src: node-exporter.service
+    dest: /lib/systemd/system/node-exporter.service
+  register: node_exporter_service
+
+- name: Start node-exporter
+  become: true
+  systemd:
+    name: node-exporter
+    enabled: true
+    state: started
+
+- name: Restart service
+  become: true
+  systemd:
+    service: node-exporter
+    daemon_reload: true
+    state: restarted
+  when: node_exporter_service.changed

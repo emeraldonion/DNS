@@ -12,3 +12,4 @@ apt:
 additional:
   odohd: 0.0.3
   nginx_exporter: 0.9.0
+  node_exporter: 1.2.2
