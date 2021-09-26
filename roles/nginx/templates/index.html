@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+
+    <title>Emerald Onion DNS Resolver</title>
+    <link href="https://emeraldonion.org/images/Emerald-Onion-transparent.png" rel="icon" type="image/png">
+
+    <meta content="Emerald Onion DNS Resolver" property="og:title"/>
+    <meta content="Emerald Onion DNS Resolver - a privacy-respecting DNS service offering modern, encrypted DNS protocols (DoT, DoH, and DoQ)" property="og:description"/>
+</head>
+
+<style>
+    html {
+        height: 100%;
+        color: #ddd;
+        background-color: #151515;
+        font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+        font-size: 15px;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    form {
+        margin: auto;
+        max-width: 90%;
+        border: 1px solid;
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        padding: 0 17px 17px 17px;
+    }
+
+    label {
+        margin-bottom: 5px;
+    }
+
+    input[type="text"] {
+        margin-bottom: 15px;
+    }
+
+    input[type="submit"] {
+        color: #dddddd;
+        background-color: #151515;
+        padding: 10px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+        margin-top: 5px;
+    }
+
+    form p {
+        font-size: larger;
+    }
+
+    footer {
+        margin-top: 50px;
+        flex-shrink: 0;
+    }
+
+    a {
+        color: inherit;
+    }
+</style>
+
+<body>
+<img alt="Emerald Onion Logo" src="https://emeraldonion.org/images/Emerald-Onion-transparent.png">
+<h1>dns.emeraldonion.org</h1>
+
+<!--<form action="/purge-cache" method="POST">-->
+<!--    <p>Purge Cache</p>-->
+<!--    <label for="zone">Zone</label>-->
+<!--    <input id="zone" name="zone" placeholder="example.com" type="text">-->
+<!--    <input type="submit" value="Submit">-->
+<!--</form>-->
+
+<footer>
+    <p>Served by: {{ inventory_hostname }}</p>
+    <hr>
+    <a href="https://emeraldonion.org">Emerald Onion</a>
+</footer>
+</body>
+</html>

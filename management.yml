@@ -16,6 +16,7 @@
       become: true
       command: "cat /opt/dns/wg-private"
       register: wg_private
+      changed_when: false
 
     - name: Create wireguard config
       become: true

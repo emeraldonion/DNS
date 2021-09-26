@@ -1,0 +1,55 @@
+- name: Remove default config
+  become: true
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/nginx/sites-available/default
+    - /etc/nginx/sites-enabled/default
+
+- name: Create web root
+  become: true
+  file:
+    path: /var/www/html/dns/
+    state: directory
+
+- name: Copy site index
+  become: true
+  template:
+    src: index.html
+    dest: /var/www/html/dns/index.html
+
+- name: Copy server config
+  become: true
+  template:
+    src: dns.emeraldonion.org
+    dest: /etc/nginx/sites-available/dns.emeraldonion.org
+  register: nginx_config
+
+- name: Copy reusable server config
+  become: true
+  template:
+    src: prod.conf
+    dest: /etc/nginx/prod.conf
+  register: nginx_config
+
+- name: Symlink server config
+  become: true
+  file:
+    src: /etc/nginx/sites-available/dns.emeraldonion.org
+    dest: /etc/nginx/sites-enabled/dns.emeraldonion.org
+    state: link
+
+- name: Start nginx
+  become: true
+  systemd:
+    name: nginx
+    state: started
+    enabled: true
+
+- name: Reload nginx
+  become: true
+  systemd:
+    name: nginx
+    state: reloaded
+  when: nginx_config.changed

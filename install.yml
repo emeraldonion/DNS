@@ -2,6 +2,9 @@
   hosts: dns_servers
   roles:
     - packages
+    - wireguard
     - knot-resolver
     - doqd
+    - odohd
+    - nginx
     - verify

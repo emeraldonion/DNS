@@ -1,0 +1,53 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+
+    server_tokens off;
+
+    # ACME Validation
+    location /.well-known/acme-challenge/ {
+        proxy_pass http://{{ management.wg.ip }}:8080;
+    }
+
+    # Fallback
+    location / {
+        return 302 https://$host$request_uri;
+    }
+}
+
+server {
+    server_name dns.emeraldonion.org;
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    include "/etc/nginx/prod.conf";
+
+    # Index
+    location / {
+        root /var/www/html/dns/;
+    }
+
+    # kresd DoH
+    location /dns-query {
+        proxy_pass https://{{ wg.ip }}:8453/dns-query;
+    }
+}
+
+server {
+    server_name odoh.dns.emeraldonion.org;
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    include "/etc/nginx/prod.conf";
+
+    # Index
+    location / {
+        root /var/www/html/dns/;
+    }
+
+    # ODoH
+    location ~ ^/(proxy|dns-query|.well-known/odohconfigs) {
+        proxy_pass http://{{ wg.ip }}:8081;
+    }
+}
