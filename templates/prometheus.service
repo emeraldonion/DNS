@@ -8,7 +8,7 @@ User=prometheus
 Group=prometheus
 Type=simple
 ExecStart=/usr/local/bin/prometheus \
-    --web.listen-address="{{ management.wg.ip }}:9090" \
+    --web.listen-address="127.0.0.1:9090" \
     --config.file /etc/prometheus/prometheus.yml \
     --storage.tsdb.path /var/lib/prometheus/ \
     --web.console.templates=/etc/prometheus/consoles \
