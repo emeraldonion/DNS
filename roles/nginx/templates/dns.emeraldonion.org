@@ -30,7 +30,7 @@ server {
 
     # kresd DoH
     location /dns-query {
-        proxy_pass https://{{ wg.ip }}:8453/dns-query;
+        proxy_pass http://{{ wg.ip }}:8453/dns-query;
     }
 }
 
