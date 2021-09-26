@@ -29,7 +29,8 @@ server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
 
-    include "/etc/nginx/prod.conf";
+    ssl_certificate "/opt/dns/cert.pem";
+    ssl_certificate_key "/opt/dns/key.pem";
 
     # Index
     location / {
@@ -47,7 +48,8 @@ server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
 
-    include "/etc/nginx/prod.conf";
+    ssl_certificate "/opt/dns/cert.pem";
+    ssl_certificate_key "/opt/dns/key.pem";
 
     # Index
     location / {

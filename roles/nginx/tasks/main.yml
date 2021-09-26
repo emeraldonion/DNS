@@ -64,11 +64,11 @@
     dest: /etc/nginx/sites-available/dns.emeraldonion.org
   register: nginx_config
 
-- name: Copy reusable server config
+- name: Copy main server config
   become: true
   template:
-    src: prod.conf
-    dest: /etc/nginx/prod.conf
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
   register: nginx_config
 
 - name: Symlink server config
