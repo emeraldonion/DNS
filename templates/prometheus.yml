@@ -1,0 +1,96 @@
+global:
+  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+
+scrape_configs:
+  - job_name: node
+    static_configs:
+      - targets:
+{% for node in groups[ "dns_servers" ] %}
+        - {{ node }}.infra.dns.emeraldonion.org:9100 # {{ node }}
+{% endfor %}
+    metric_relabel_configs:
+      - source_labels: ["__name__"]
+        regex: "^(go).*$"
+        action: drop
+    relabel_configs:
+      - source_labels: [ __address__ ]
+        target_label: instance
+        regex: '(.*).infra.dns.emeraldonion.org.*'
+        replacement: '${1}'
+      - source_labels: [ __address__ ]
+        target_label: pop
+        regex: '(.*)[0-9][0-9].infra.dns.emeraldonion.org.*'
+        replacement: '${1}'
+
+  - job_name: kresd
+    static_configs:
+      - targets:
+{% for node in groups[ "dns_servers" ] %}
+        - {{ node }}.infra.dns.emeraldonion.org:8453 # {{ node }}
+{% endfor %}
+    relabel_configs:
+      - source_labels: [ __address__ ]
+        target_label: instance
+        regex: '(.*).infra.dns.emeraldonion.org.*'
+        replacement: '${1}'
+      - source_labels: [ __address__ ]
+        target_label: pop
+        regex: '(.*)[0-9][0-9].infra.dns.emeraldonion.org.*'
+        replacement: '${1}'
+
+  - job_name: odohd
+    static_configs:
+      - targets:
+{% for node in groups[ "dns_servers" ] %}
+        - {{ node }}.infra.dns.emeraldonion.org:8082 # {{ node }}
+{% endfor %}
+    metric_relabel_configs:
+      - source_labels: ["__name__"]
+        regex: "^(go).*$"
+        action: drop
+    relabel_configs:
+      - source_labels: [ __address__ ]
+        target_label: instance
+        regex: '(.*).infra.dns.emeraldonion.org.*'
+        replacement: '${1}'
+      - source_labels: [ __address__ ]
+        target_label: pop
+        regex: '(.*)[0-9][0-9].infra.dns.emeraldonion.org.*'
+        replacement: '${1}'
+
+  - job_name: doqd
+    static_configs:
+      - targets:
+{% for node in groups[ "dns_servers" ] %}
+        - {{ node }}.infra.dns.emeraldonion.org:8083 # {{ node }}
+{% endfor %}
+    metric_relabel_configs:
+      - source_labels: ["__name__"]
+        regex: "^(go).*$"
+        action: drop
+    relabel_configs:
+      - source_labels: [ __address__ ]
+        target_label: instance
+        regex: '(.*).infra.dns.emeraldonion.org.*'
+        replacement: '${1}'
+      - source_labels: [ __address__ ]
+        target_label: pop
+        regex: '(.*)[0-9][0-9].infra.dns.emeraldonion.org.*'
+        replacement: '${1}'
+
+  - job_name: nginx
+    static_configs:
+      - targets:
+{% for node in groups[ "dns_servers" ] %}
+        - {{ node }}.infra.dns.emeraldonion.org:9113 # {{ node }}
+{% endfor %}
+    relabel_configs:
+      - source_labels: [ __address__ ]
+        target_label: instance
+        regex: '(.*).infra.dns.emeraldonion.org.*'
+        replacement: '${1}'
+      - source_labels: [ __address__ ]
+        target_label: pop
+        regex: '(.*)[0-9][0-9].infra.dns.emeraldonion.org.*'
+        replacement: '${1}'

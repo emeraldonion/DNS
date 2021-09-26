@@ -1,40 +1,127 @@
 - name: Management
   hosts: management
   tasks:
-    - name: Check if private key exists
+    - name: Include package versions
+      include_vars:
+        file: packages.yml
+        name: packages
+
+#    - name: Check if private key exists
+#      become: true
+#      stat:
+#        path: /opt/dns/wg-private
+#      register: wg_private_stat
+#
+#    - name: Generate keypair
+#      become: true
+#      shell: umask 077 ; wg genkey | tee /opt/dns/wg-private | wg pubkey > /opt/dns/wg-public
+#      when: not wg_private_stat.stat.exists
+#
+#    - name: Read private key
+#      become: true
+#      command: "cat /opt/dns/wg-private"
+#      register: wg_private
+#      changed_when: false
+#
+#    - name: Create wireguard config
+#      become: true
+#      template:
+#        src: wg-dns.conf
+#        dest: /etc/wireguard/wg-dns.conf
+#      register: wg_config
+#
+#    - name: Enable wg-quick@wg-dns
+#      become: true
+#      systemd:
+#        name: wg-quick@wg-dns
+#        enabled: true
+#        state: started
+#
+#    - name: Restart wg-quick@wg-dns
+#      become: true
+#      systemd:
+#        name: wg-quick@wg-dns
+#        state: restarted
+#      when: wg_config.changed
+
+    - name: Add prometheus group
       become: true
+      group:
+        name: prometheus
+        state: present
+
+    - name: Add prometheus user
+      become: true
+      user:
+        name: prometheus
+        group: prometheus
+        shell: /sbin/nologin
+        create_home: false
+
+    - name: Check if prometheus exists
       stat:
-        path: /opt/dns/wg-private
-      register: wg_private_stat
+        path: /usr/local/bin/prometheus
+      register: prometheus
 
-    - name: Generate keypair
+    - name: Download prometheus
       become: true
-      shell: umask 077 ; wg genkey | tee /opt/dns/wg-private | wg pubkey > /opt/dns/wg-public
-      when: not wg_private_stat.stat.exists
+      unarchive:
+        src: "https://github.com/prometheus/prometheus/releases/download/v{{ packages.additional.management_prometheus }}/prometheus-{{ packages.additional.management_prometheus }}.linux-amd64.tar.gz"
+        dest: /tmp/
+        remote_src: true
+      when: not prometheus.stat.exists
 
-    - name: Read private key
+    - name: Make prometheus directories
       become: true
-      command: "cat /opt/dns/wg-private"
-      register: wg_private
-      changed_when: false
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: prometheus
+        group: prometheus
+      loop:
+        - /etc/prometheus/
+        - /var/lib/prometheus/
 
-    - name: Create wireguard config
+    - name: Move prometheus
+      become: true
+      shell: |
+        mv /tmp/prometheus-{{ packages.additional.management_prometheus }}.linux-amd64/prometheus /usr/local/bin/prometheus
+        mv /tmp/prometheus-{{ packages.additional.management_prometheus }}.linux-amd64/consoles /etc/prometheus/
+        mv /tmp/prometheus-{{ packages.additional.management_prometheus }}.linux-amd64/console_libraries /etc/prometheus/
+        chmod -R prometheus:prometheus /etc/prometheus/*
+      when: not prometheus.stat.exists
+
+    - name: Copy hosts file
       become: true
       template:
-        src: wg-dns.conf
-        dest: /etc/wireguard/wg-dns.conf
-      register: wg_config
+        src: hosts
+        dest: /etc/hosts
 
-    - name: Enable wg-quick@wg-dns
+    - name: Copy prometheus config
+      become: true
+      template:
+        src: prometheus.yml
+        dest: /etc/prometheus/prometheus.yml
+      register: prometheus_config
+
+    - name: Copy prometheus service
+      become: true
+      template:
+        src: prometheus.service
+        dest: /lib/systemd/system/prometheus.service
+      register: prometheus_service
+
+    - name: Start prometheus
       become: true
       systemd:
-        name: wg-quick@wg-dns
+        name: prometheus
         enabled: true
         state: started
 
-    - name: Restart wg-quick@wg-dns
+    - name: Restart prometheus
       become: true
       systemd:
-        name: wg-quick@wg-dns
+        service: prometheus
+        daemon_reload: true
         state: restarted
-      when: wg_config.changed
+      when: prometheus_service.changed or prometheus_config.changed
