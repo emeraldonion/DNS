@@ -1,0 +1,55 @@
+- name: Get TLS bundle
+  hosts: management
+  tasks:
+    - name: Renew certificate
+      become: true
+      shell: |
+        certbot \
+          renew \
+          --webroot \
+          --webroot-path /usr/share/caddy/ \
+          --preferred-challenges http-01 \
+          --email {{ email }} \
+          --agree-tos \
+          --no-eff-email \
+          --manual-public-ip-logging-ok
+
+    - name: Get TLS certificate
+      become: true
+      shell: cat /etc/letsencrypt/live/dns.emeraldonion.org/fullchain.pem
+      register: tls_cert
+
+    - name: Get TLS key
+      become: true
+      shell: cat /etc/letsencrypt/live/dns.emeraldonion.org/privkey.pem
+      register: tls_key
+
+- name: Deploy bundle
+  hosts: dns_servers
+  tasks:
+    - name: Copy TLS certificate
+      become: true
+      copy:
+        content: "{{ hostvars['management-sea']['tls_cert']['stdout'] }}"
+        dest: /opt/dns/cert.pem
+
+    - name: Copy TLS key
+      become: true
+      copy:
+        content: "{{ hostvars['management-sea']['tls_key']['stdout'] }}"
+        dest: /opt/dns/key.pem
+
+    - name: Reload nginx
+      become: true
+      systemd:
+        name: nginx
+        state: reloaded
+
+    - name: Restart services that can't be live reloaded
+      become: true
+      systemd:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - kresd@1
+        - doqd

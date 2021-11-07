@@ -1,0 +1,42 @@
+- name: Add doqd group
+  become: true
+  group:
+    name: doqd
+    state: present
+
+- name: Add doqd user
+  become: true
+  user:
+    name: doqd
+    group: doqd
+    shell: /sbin/nologin
+    create_home: false
+
+- name: Copy doqd default
+  become: true
+  template:
+    src: doqd
+    dest: /etc/default/doqd
+  register: doqd_default
+
+- name: Copy doqd service
+  become: true
+  template:
+    src: doqd.service
+    dest: /lib/systemd/system/doqd.service
+  register: doqd_service
+
+- name: Start doqd
+  become: true
+  systemd:
+    name: doqd
+    enabled: true
+    state: started
+
+- name: Restart service
+  become: true
+  systemd:
+    service: doqd
+    daemon_reload: true
+    state: restarted
+  when: doqd_service.changed or doqd_default.changed

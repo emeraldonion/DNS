@@ -1,7 +1,10 @@
 - name: Install
-  hosts: all
+  hosts: dns_servers
   roles:
-    - unbound
-    - dnsproxy
-    - bcg
+    - packages
+    - wireguard
+    - knot-resolver
+    - doqd
+    - odohd
+    - nginx
     - verify
