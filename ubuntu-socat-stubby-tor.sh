@@ -8,6 +8,13 @@
 ### GNU General Public License v3.0                                 ###
 ### https://github.com/emeraldonion/DNS/blob/main/LICENSE           ###
 #######################################################################
+### Stubby is set to distribute queries across all available name   ###
+### servers defined below: Emerald Onion, Quad9, and Cloudflare.    ###
+### This configuration will use multiple simultaneous connections   ###
+### via DoT (TLS 1.3 only via 853/tcp) via Tor which can give       ###
+### better performance in most cases and distribute DNS accross     ###
+### all providers (or more, if you wish) at the same time.          ###
+#######################################################################
 
 # update ca-certificates, install tor, torify apt, install socat and stubby
 
