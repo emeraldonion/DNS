@@ -38,7 +38,8 @@
 ###
 ###########################################################################
 
-# install tor, socat and stubby
+# Install tor, socat and stubby. It would be best if you follow
+# Tor Project's guide to installing the latest tor for Debian/Ubuntu.
 
 apt update
 
