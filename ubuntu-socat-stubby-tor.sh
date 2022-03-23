@@ -54,9 +54,8 @@ edns_client_subnet_private : 1
 round_robin_upstreams: 1
 idle_timeout: 10000
 tls_ca_path: "/etc/ssl/certs/"
-tls_cipher_list: "EECDH+AESGCM:EECDH+CHACHA20"
 tls_ciphersuites: "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256"
-tls_min_version: GETDNS_TLS1_2
+tls_min_version: GETDNS_TLS1_3
 tls_max_version: GETDNS_TLS1_3
 listen_addresses:
   - 127.0.8.53
