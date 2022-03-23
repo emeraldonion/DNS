@@ -76,7 +76,7 @@ echo '  - address_data: 127.0.0.1' >> /etc/stubby/stubby.yml
 echo '    tls_auth_name: "dns.quad9.net"' >> /etc/stubby/stubby.yml
 echo '    tls_port: 8531' >> /etc/stubby/stubby.yml
 echo '  - address_data: 127.0.0.1' >> /etc/stubby/stubby.yml
-echo '    tls_auth_name: "cloudflare-dns.com"' >> /etc/stubby/stubby.yml
+echo '    tls_auth_name: "1dot1dot1dot1.cloudflare-dns.com"' >> /etc/stubby/stubby.yml
 echo '    tls_port: 8532' >> /etc/stubby/stubby.yml
 
 # create user + group
