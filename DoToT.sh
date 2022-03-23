@@ -10,16 +10,31 @@
 ###   https://github.com/emeraldonion/DNS/blob/main/LICENSE             ###
 ###                                                                     ###
 ###########################################################################
-###                                                                     ###
-###   From Debian/Ubuntu, stubby is set to use socat to use tor to      ###
-###   distribute queries across all available name servers defined      ###
-###   below: Emerald Onion, Quad9, and Cloudflare, at the same time.    ###
-###                                                                     ###
-###   Using multiple simultaneous connections to these providers via    ###
-###   DoT (TLS 1.3 via 853/tcp via Tor) you gain DNS resolution         ###
-###   security (across the wire), anonymity (to public DNS resolvers),  ###
-###   and censorship resistance (if your government is fucked).         ###
-###                                                                     ###
+###
+###   For Debian or Ubuntu:
+###
+###   1. tor is listening on a local socket, 127.0.0.1:9050.
+###
+###   2. Three independent socat services (customizable) are listening
+###      on one of three local sockets, 127.0.0.1:8530, 127.0.0.1:8531,
+###      and 127.0.0.1:8532. Each socket is dedicated to sending DNS
+###      queries to Emerald Onion's DoT service, Cloudflare's DoT service,
+###      and Quad 9's DoT service simultaneously, and the first response
+###      back wins.
+###
+###   3. stubby becomes the local DNS daemon and creates a local IP
+###      (127.0.8.53) for local queries to be sent to. stubby takes DNS
+###      queries, makes them DoT queries (853/tcp wrapped in TLS 1.3),
+###      and sends requests to the “upstream recursive servers” which
+###      are actually the local socat services that pipe everything
+###      through Tor.
+###
+###   Benefits:
+###
+###   1. Security across the wire from both TLS 1.3 and Tor.
+###   2. Anonymity to public DNS resolvers that you choose from Tor.
+###   3. Censorship resistance if you have a bad government.
+###
 ###########################################################################
 
 # install tor, socat and stubby
