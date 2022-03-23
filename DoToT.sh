@@ -11,7 +11,7 @@
 ###                                                                     ###
 ###########################################################################
 ###
-###   For Debian or Ubuntu:
+###   For local DNS resolution on Debian or Ubuntu, client or server:
 ###
 ###   1. tor is listening on a local socket, 127.0.0.1:9050.
 ###
