@@ -83,6 +83,8 @@ echo '    tls_port: 8532' >> /etc/stubby/stubby.yml
 
 useradd tor-dns
 
+groupadd tor-dns
+
 chsh -s /sbin/nologin tor-dns
 
 # create services
