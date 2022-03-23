@@ -131,4 +131,4 @@ systemctl enable --now tor-dns-cf
 
 systemctl enable --now tor-dns-q9
 
-# Now you should set 127.0.8.53 as your only nameserver in Netplan on Ubuntu to make this a system-wide configuration!
+# Now you should set 127.0.8.53 as your only nameserver in Netplan on Ubuntu to make this a system-wide configuration, or in /etc/resolv.conf for Debian.
