@@ -74,7 +74,7 @@ upstream_recursive_servers:
     tls_auth_name: "dns.quad9.net"
     tls_port: 8531
   - address_data: 127.0.0.1
-    tls_auth_name: "cloudflare-dns.com"
+    tls_auth_name: "1dot1dot1dot1.cloudflare-dns.com"
     tls_port: 8532' > /etc/stubby/stubby.yml
 
 # create user + group
