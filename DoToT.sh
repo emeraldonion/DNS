@@ -11,13 +11,14 @@
 ###                                                                     ###
 ###########################################################################
 ###                                                                     ###
-###   Stubby is set to distribute queries across all available name     ###
-###   servers defined below: Emerald Onion, Quad9, and Cloudflare.      ###
-###   This configuration will use multiple simultaneous connections     ###
-###   via DoT (TLS 1.3 only via 853/tcp) via Tor which can give         ###
-###   better performance in most cases and distribute DNS requets       ###
-###   accross all providers (or more, if you wish) at the same time     ###
-###   with security, anonymity, and censorship resistance.              ###
+###   From Debian/Ubuntu, stubby is set to use socat to use tor to      ###
+###   distribute queries across all available name servers defined      ###
+###   below: Emerald Onion, Quad9, and Cloudflare, at the same time.    ###
+###                                                                     ###
+###   Using multiple simultaneous connections to these providers via    ###
+###   DoT (TLS 1.3 via 853/tcp via Tor) you gain DNS resolution         ###
+###   security (across the wire), anonymity (to public DNS resolvers),  ###
+###   and censorship resistance (if your government is fucked).         ###
 ###                                                                     ###
 ###########################################################################
 
