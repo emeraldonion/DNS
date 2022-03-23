@@ -81,8 +81,6 @@ upstream_recursive_servers:
 
 useradd tor-dns
 
-groupadd tor-dns
-
 chsh -s /sbin/nologin tor-dns
 
 # create services
