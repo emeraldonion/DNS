@@ -48,6 +48,8 @@ apt install tor socat stubby -y
 
 mv /etc/stubby/stubby.yml /etc/stubby/stubby.backup1
 
+# note: checkout stubby.backup1 to see alternative DoT services
+
 touch /etc/stubby/stubby.yml
 
 echo 'resolution_type: GETDNS_RESOLUTION_STUB
