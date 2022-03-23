@@ -1,4 +1,5 @@
 #!/bin/bash
+# Thanks to some of the Emerald Onion crew, Nate Sales and Yawnbox
 
 # install tor, torify apt, install socat and stubby
 
