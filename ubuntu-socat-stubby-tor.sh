@@ -1,16 +1,16 @@
 #!/bin/bash
 
-#############################################################
-### Thanks to Nate Sales and Yawnbox of Emerald Onion     ###
-### https://emeraldonion.org                              ###
-### https://github.com/emeraldonion/DNS/                  ###
-### GNU General Public License v3.0                       ###
-### https://github.com/emeraldonion/DNS/blob/main/LICENSE ###
-#############################################################
+#######################################################################
+### DNS over TLS over Tor (DoToT) for Ubuntu Server 20.04 LTS Focal ###
+#######################################################################
 
-#################################################
-### This is for Ubuntu Server 20.04 LTS Focal ###
-#################################################
+#######################################################################
+### Thanks to Nate Sales and Yawnbox of Emerald Onion               ###
+### https://emeraldonion.org                                        ###
+### https://github.com/emeraldonion/DNS/                            ###
+### GNU General Public License v3.0                                 ###
+### https://github.com/emeraldonion/DNS/blob/main/LICENSE           ###
+#######################################################################
 
 # update ca-certificates, install tor, torify apt, install socat and stubby
 
