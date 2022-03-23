@@ -1,5 +1,12 @@
 #!/bin/bash
-# Thanks to some of the Emerald Onion crew, Nate Sales and Yawnbox
+#
+# Thanks to Nate Sales and Yawnbox of Emerald Onion
+# https://emeraldonion.org
+# https://github.com/emeraldonion/DNS/
+#
+# GNU General Public License v3.0
+# https://github.com/emeraldonion/DNS/blob/main/LICENSE
+#
 
 # update ca-certificates, install tor, torify apt, install socat and stubby
 
