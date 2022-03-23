@@ -2,9 +2,6 @@
 
 #######################################################################
 ### DNS over TLS over Tor (DoToT) for Ubuntu Server 20.04 LTS Focal ###
-#######################################################################
-
-#######################################################################
 ### Thanks to Nate Sales and Yawnbox of Emerald Onion               ###
 ### https://emeraldonion.org                                        ###
 ### https://github.com/emeraldonion/DNS/                            ###
