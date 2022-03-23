@@ -32,8 +32,9 @@
 ###   Benefits:
 ###
 ###   1. Security across the wire from both TLS 1.3 and Tor.
-###   2. Anonymity to public DNS resolvers that you choose from Tor.
-###   3. Censorship resistance if you have a bad government.
+###   2. Physical location privacy to public DNS resolvers with Tor.
+###   3. Censorship resistance from both TLS 1.3 and Tor.
+###   4. Redundancy with multiple external DoT providers.
 ###
 ###########################################################################
 
