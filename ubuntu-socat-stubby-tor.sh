@@ -49,6 +49,44 @@ echo 'socat TCP4-LISTEN:8532,reuseaddr,fork SOCKS4A:127.0.0.1:1dot1dot1dot1.clou
 
 chmod +x /opt/start-tor-dns.sh
 
+mv /etc/stubby/stubby.yml /etc/stubby/stubby.backup1
+
+touch /etc/stubby/stubby.yml
+
+echo 'resolution_type: GETDNS_RESOLUTION_STUB' >> /etc/stubby/stubby.yml
+echo 'dns_transport_list:' >> /etc/stubby/stubby.yml
+echo '  - GETDNS_TRANSPORT_TLS' >> /etc/stubby/stubby.yml
+echo 'tls_authentication: GETDNS_AUTHENTICATION_REQUIRED' >> /etc/stubby/stubby.yml
+echo 'tls_query_padding_blocksize: 128' >> /etc/stubby/stubby.yml
+echo 'edns_client_subnet_private : 1' >> /etc/stubby/stubby.yml
+echo 'round_robin_upstreams: 1' >> /etc/stubby/stubby.yml
+echo 'idle_timeout: 10000' >> /etc/stubby/stubby.yml
+echo 'tls_ca_path: "/etc/ssl/certs/"' >> /etc/stubby/stubby.yml
+echo 'tls_cipher_list: "EECDH+AESGCM:EECDH+CHACHA20"' >> /etc/stubby/stubby.yml
+echo 'tls_ciphersuites: "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256"' >> /etc/stubby/stubby.yml
+echo 'tls_min_version: GETDNS_TLS1_2' >> /etc/stubby/stubby.yml
+echo 'tls_max_version: GETDNS_TLS1_3' >> /etc/stubby/stubby.yml
+echo 'listen_addresses:' >> /etc/stubby/stubby.yml
+echo '  - 127.0.8.53' >> /etc/stubby/stubby.yml
+echo 'upstream_recursive_servers:' >> /etc/stubby/stubby.yml
+echo '  - address_data: 127.0.0.1' >> /etc/stubby/stubby.yml
+echo '    tls_auth_name: "dns.emeraldonion.org"' >> /etc/stubby/stubby.yml
+echo '    tls_port: 8530' >> /etc/stubby/stubby.yml
+echo '  - address_data: 127.0.0.1' >> /etc/stubby/stubby.yml
+echo '    tls_auth_name: "dns.quad9.net"' >> /etc/stubby/stubby.yml
+echo '    tls_port: 8531' >> /etc/stubby/stubby.yml
+echo '  - address_data: 127.0.0.1' >> /etc/stubby/stubby.yml
+echo '    tls_auth_name: "cloudflare-dns.com"' >> /etc/stubby/stubby.yml
+echo '    tls_port: 8532' >> /etc/stubby/stubby.yml
+
+# create user + group
+
+useradd tor-dns
+
+chsh -s /sbin/nologin tor-dns
+
+# create services
+
 touch /etc/systemd/system/tor-dns-eo.service
 
 echo '[Unit]' >> /etc/systemd/system/tor-dns-eo.service
@@ -97,41 +135,12 @@ echo 'RestrictNamespaces=yes' >> /etc/systemd/system/tor-dns-q9.service
 echo '[Install]' >> /etc/systemd/system/tor-dns-q9.service
 echo 'WantedBy=multi-user.target' >> /etc/systemd/system/tor-dns-q9.service
 
-mv /etc/stubby/stubby.yml /etc/stubby/stubby.backup1
-
-touch /etc/stubby/stubby.yml
-
-echo 'resolution_type: GETDNS_RESOLUTION_STUB' >> /etc/stubby/stubby.yml
-echo 'dns_transport_list:' >> /etc/stubby/stubby.yml
-echo '  - GETDNS_TRANSPORT_TLS' >> /etc/stubby/stubby.yml
-echo 'tls_authentication: GETDNS_AUTHENTICATION_REQUIRED' >> /etc/stubby/stubby.yml
-echo 'tls_query_padding_blocksize: 128' >> /etc/stubby/stubby.yml
-echo 'edns_client_subnet_private : 1' >> /etc/stubby/stubby.yml
-echo 'round_robin_upstreams: 1' >> /etc/stubby/stubby.yml
-echo 'idle_timeout: 10000' >> /etc/stubby/stubby.yml
-echo 'tls_ca_path: "/etc/ssl/certs/"' >> /etc/stubby/stubby.yml
-echo 'tls_cipher_list: "EECDH+AESGCM:EECDH+CHACHA20"' >> /etc/stubby/stubby.yml
-echo 'tls_ciphersuites: "TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256"' >> /etc/stubby/stubby.yml
-echo 'tls_min_version: GETDNS_TLS1_2' >> /etc/stubby/stubby.yml
-echo 'tls_max_version: GETDNS_TLS1_3' >> /etc/stubby/stubby.yml
-echo 'listen_addresses:' >> /etc/stubby/stubby.yml
-echo '  - 127.0.8.53' >> /etc/stubby/stubby.yml
-echo 'upstream_recursive_servers:' >> /etc/stubby/stubby.yml
-echo '  - address_data: 127.0.0.1' >> /etc/stubby/stubby.yml
-echo '    tls_auth_name: "dns.emeraldonion.org"' >> /etc/stubby/stubby.yml
-echo '    tls_port: 8530' >> /etc/stubby/stubby.yml
-echo '  - address_data: 127.0.0.1' >> /etc/stubby/stubby.yml
-echo '    tls_auth_name: "dns.quad9.net"' >> /etc/stubby/stubby.yml
-echo '    tls_port: 8531' >> /etc/stubby/stubby.yml
-echo '  - address_data: 127.0.0.1' >> /etc/stubby/stubby.yml
-echo '    tls_auth_name: "cloudflare-dns.com"' >> /etc/stubby/stubby.yml
-echo '    tls_port: 8532' >> /etc/stubby/stubby.yml
-
-# create user + group
-
-
-# create service
-
-
 # start service
 
+systemctl daemon-reload
+
+systemctl enable --now tor-dns-eo
+
+systemctl enable --now tor-dns-cf
+
+systemctl enable --now tor-dns-q9
