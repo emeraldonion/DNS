@@ -1,21 +1,25 @@
 #!/bin/bash
 
-#######################################################################
-### DNS over TLS over Tor (DoToT) for Ubuntu Server 20.04 LTS Focal ###
-### Thanks to Nate Sales and Yawnbox of Emerald Onion               ###
-### https://emeraldonion.org                                        ###
-### https://github.com/emeraldonion/DNS/                            ###
-### GNU General Public License v3.0                                 ###
-### https://github.com/emeraldonion/DNS/blob/main/LICENSE           ###
-#######################################################################
-### Stubby is set to distribute queries across all available name   ###
-### servers defined below: Emerald Onion, Quad9, and Cloudflare.    ###
-### This configuration will use multiple simultaneous connections   ###
-### via DoT (TLS 1.3 only via 853/tcp) via Tor which can give       ###
-### better performance in most cases and distribute DNS requets     ###
-### accross all providers (or more, if you wish) at the same time   ###
-### with security, anonymity, and censorship resistance.            ###
-#######################################################################
+###########################################################################
+###                                                                     ###
+###   DNS over TLS over Tor (DoToT) for Ubuntu Server 20.04 LTS Focal   ###
+###   Thanks to Nate Sales and Yawnbox of Emerald Onion                 ###
+###   https://emeraldonion.org                                          ###
+###   https://github.com/emeraldonion/DNS/                              ###
+###   GNU General Public License v3.0                                   ###
+###   https://github.com/emeraldonion/DNS/blob/main/LICENSE             ###
+###                                                                     ###
+###########################################################################
+###                                                                     ###
+###   Stubby is set to distribute queries across all available name     ###
+###   servers defined below: Emerald Onion, Quad9, and Cloudflare.      ###
+###   This configuration will use multiple simultaneous connections     ###
+###   via DoT (TLS 1.3 only via 853/tcp) via Tor which can give         ###
+###   better performance in most cases and distribute DNS requets       ###
+###   accross all providers (or more, if you wish) at the same time     ###
+###   with security, anonymity, and censorship resistance.              ###
+###                                                                     ###
+###########################################################################
 
 # update ca-certificates, install tor, torify apt, install socat and stubby
 
