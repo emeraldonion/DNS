@@ -18,11 +18,11 @@ mv /etc/apt/sources.list /etc/apt.sources.backup1
 
 touch /etc/apt/sources.list
 
-echo 'deb https://mirrors.wikimedia.org/ubuntu/ focal main restricted universe multiverse' >> /etc/apt/sources.list
-echo 'deb https://mirrors.wikimedia.org/ubuntu/ focal-updates main restricted universe multiverse' >> /etc/apt/sources.list
-echo 'deb https://mirrors.wikimedia.org/ubuntu/ focal-backports main restricted universe multiverse' >> /etc/apt/sources.list
-echo 'deb https://mirrors.wikimedia.org/ubuntu/ focal-security main restricted universe multiverse' >> /etc/apt/sources.list
-echo 'deb [arch=amd64] https://deb.torproject.org/torproject.org focal main' >> /etc/apt/sources.list
+echo 'deb https://mirrors.wikimedia.org/ubuntu/ focal main restricted universe multiverse
+deb https://mirrors.wikimedia.org/ubuntu/ focal-updates main restricted universe multiverse
+deb https://mirrors.wikimedia.org/ubuntu/ focal-backports main restricted universe multiverse
+deb https://mirrors.wikimedia.org/ubuntu/ focal-security main restricted universe multiverse
+deb [arch=amd64] https://deb.torproject.org/torproject.org focal main' > /etc/apt/sources.list
 
 wget -qO- https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --import
 
@@ -36,11 +36,11 @@ mv /etc/apt/sources.list /etc/apt.sources.backup2
 
 touch /etc/apt/sources.list
 
-echo 'deb tor+https://mirrors.wikimedia.org/ubuntu/ focal main restricted universe multiverse' >> /etc/apt/sources.list
-echo 'deb tor+https://mirrors.wikimedia.org/ubuntu/ focal-updates main restricted universe multiverse' >> /etc/apt/sources.list
-echo 'deb tor+https://mirrors.wikimedia.org/ubuntu/ focal-backports main restricted universe multiverse' >> /etc/apt/sources.list
-echo 'deb tor+https://mirrors.wikimedia.org/ubuntu/ focal-security main restricted universe multiverse' >> /etc/apt/sources.list
-echo 'deb [arch=amd64] tor+https://deb.torproject.org/torproject.org focal main' >> /etc/apt/sources.list
+echo 'deb tor+https://mirrors.wikimedia.org/ubuntu/ focal main restricted universe multiverse
+deb tor+https://mirrors.wikimedia.org/ubuntu/ focal-updates main restricted universe multiverse
+deb tor+https://mirrors.wikimedia.org/ubuntu/ focal-backports main restricted universe multiverse
+deb tor+https://mirrors.wikimedia.org/ubuntu/ focal-security main restricted universe multiverse
+deb [arch=amd64] tor+https://deb.torproject.org/torproject.org focal main' > /etc/apt/sources.list
 
 apt update
 
@@ -75,7 +75,7 @@ upstream_recursive_servers:
     tls_port: 8531
   - address_data: 127.0.0.1
     tls_auth_name: "cloudflare-dns.com"
-    tls_port: 8532' >> /etc/stubby/stubby.yml
+    tls_port: 8532' > /etc/stubby/stubby.yml
 
 # create user + group
 
@@ -103,7 +103,7 @@ ProtectKernelTunables=yes
 RestrictNamespaces=yes
 
 [Install]
-WantedBy=multi-user.target' >> /etc/systemd/system/tor-dns-eo.service
+WantedBy=multi-user.target' > /etc/systemd/system/tor-dns-eo.service
 
 touch /etc/systemd/system/tor-dns-cf.service
 
@@ -121,7 +121,7 @@ ProtectKernelTunables=yes
 RestrictNamespaces=yes
 
 [Install]
-WantedBy=multi-user.target' >> /etc/systemd/system/tor-dns-cf.service
+WantedBy=multi-user.target' > /etc/systemd/system/tor-dns-cf.service
 
 touch /etc/systemd/system/tor-dns-q9.service
 
@@ -139,7 +139,7 @@ ProtectKernelTunables=yes
 RestrictNamespaces=yes
 
 [Install]
-WantedBy=multi-user.target' >> /etc/systemd/system/tor-dns-q9.service
+WantedBy=multi-user.target' > /etc/systemd/system/tor-dns-q9.service
 
 # start service
 
