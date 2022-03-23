@@ -2,7 +2,7 @@
 
 ###########################################################################
 ###                                                                     ###
-###   DNS over TLS over Tor (DoToT) for Ubuntu Server 20.04 LTS Focal   ###
+###   DNS over TLS over Tor (DoToT)                                     ###
 ###   Thanks to Nate Sales and Yawnbox of Emerald Onion                 ###
 ###   https://emeraldonion.org                                          ###
 ###   https://github.com/emeraldonion/DNS/                              ###
@@ -21,43 +21,11 @@
 ###                                                                     ###
 ###########################################################################
 
-# update ca-certificates, install tor, torify apt, install socat and stubby
+# install tor, socat and stubby
 
 apt update
 
-apt install ca-certificates -y
-
-mv /etc/apt/sources.list /etc/apt.sources.backup1
-
-touch /etc/apt/sources.list
-
-echo 'deb https://mirrors.wikimedia.org/ubuntu/ focal main restricted universe multiverse
-deb https://mirrors.wikimedia.org/ubuntu/ focal-updates main restricted universe multiverse
-deb https://mirrors.wikimedia.org/ubuntu/ focal-backports main restricted universe multiverse
-deb https://mirrors.wikimedia.org/ubuntu/ focal-security main restricted universe multiverse
-deb [arch=amd64] https://deb.torproject.org/torproject.org focal main' > /etc/apt/sources.list
-
-wget -qO- https://deb.torproject.org/torproject.org/A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89.asc | gpg --import
-
-gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | apt-key add -
-
-apt update
-
-apt install tor deb.torproject.org-keyring apt-transport-tor -y
-
-mv /etc/apt/sources.list /etc/apt.sources.backup2
-
-touch /etc/apt/sources.list
-
-echo 'deb tor+https://mirrors.wikimedia.org/ubuntu/ focal main restricted universe multiverse
-deb tor+https://mirrors.wikimedia.org/ubuntu/ focal-updates main restricted universe multiverse
-deb tor+https://mirrors.wikimedia.org/ubuntu/ focal-backports main restricted universe multiverse
-deb tor+https://mirrors.wikimedia.org/ubuntu/ focal-security main restricted universe multiverse
-deb [arch=amd64] tor+https://deb.torproject.org/torproject.org focal main' > /etc/apt/sources.list
-
-apt update
-
-apt install socat stubby -y
+apt install tor socat stubby -y
 
 # set stubby configs
 
@@ -162,4 +130,4 @@ systemctl enable --now tor-dns-cf
 
 systemctl enable --now tor-dns-q9
 
-# Now you should set 127.0.8.53 as your only nameserver in Netplan to make this a system-wide configuration!
+# Now you should set 127.0.8.53 as your only nameserver in Netplan on Ubuntu to make this a system-wide configuration!
