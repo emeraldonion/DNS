@@ -19,8 +19,7 @@
 ###      on one of three local sockets, 127.0.0.1:8530, 127.0.0.1:8531,
 ###      and 127.0.0.1:8532. Each socket is dedicated to sending DNS
 ###      queries to Emerald Onion's DoT service, Cloudflare's DoT service,
-###      and Quad 9's DoT service simultaneously, and the first response
-###      back wins.
+###      and Quad 9's DoT service simultaneously.
 ###
 ###   3. stubby becomes the local DNS daemon and creates a local IP
 ###      (127.0.8.53) for local queries to be sent to. stubby takes DNS
