@@ -4,7 +4,6 @@
     - packages
     - wireguard
     - knot-resolver
-    - doqd
-    - odohd
+    - node-exporter
     - nginx
     - verify
