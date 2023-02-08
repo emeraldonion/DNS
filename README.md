@@ -1,14 +1,14 @@
 # Emerald Onion's Encrypted DNS Resolver
 
-The Emerald Onion public recursive name server (aka DNS resolver) is a privacy-respecting DNS service offering modern, encrypted DNS protocols: `DNS-over-TLS (DoT)`, `DNS-over-HTTPS (DoH)`, and `DNS-over-QUIC (DoQ)`. We have configured [dnsproxy](https://github.com/AdguardTeam/dnsproxy) and [unbound](https://www.nlnetlabs.nl/projects/unbound/about/) with specific privacy controls:
+The Emerald Onion is a privacy-respecting DNS resolver offering modern, encrypted DNS protocols: `DNS-over-TLS (DoT)` and `DNS-over-HTTPS (DoH)` We have configured specific privacy controls:
 
-1. `DoT`, `DoH`, and `DoQ` TLS-based transport encryption ensures that your ISP cannot see your DNS queries.
-2. IP connection data and metadata logging has been disabled completely. No IP logs exist at Emerald Onion's edge, firewall, `dnsproxy` syslog, or `unbound` syslog.
-3. DNS query data and metadata logging has been disabled completely. This includes disabling `unbound-control` to prevent the possibility of exposing unbound's in-memory data to the Emerald Onion admins.
+1. `DoT` and `DoH` use transport encryption to ensure that your ISP cannot see your DNS queries.
+2. IP connection data and metadata logging have been disabled completely. No IP logs are kept by Emerald Onion's edge or firewall.
+3. DNS query data and metadata logging have been disabled completely.
 4. A DNS caching resolver offers inherent privacy due to the fact that if another user requested DNS information before you, and the validity time has not expired, then the DNS service will not transmit another upstream request for the data. This makes it more difficult for network adversaries to track users.
-5. [QNAME minimization](https://www.isc.org/blogs/qname-minimization-and-privacy/) assures that upstream DNS services are only sent the minimum amount of data necessary to perform DNS resolution.
+5. [QNAME minimization](https://www.isc.org/blogs/qname-minimization-and-privacy/) ensures that upstream DNS services are only sent the minimum amount of data necessary to perform DNS resolution.
 
-Emerald Onion's software configurations are pulled directly from [this Github repo](https://github.com/emeraldonion/DNS/tree/main/templates), so users can validate for themselves that these privacy settings are enforced. This public DNS service is shared by [Emerald Onion's Tor exit relays](https://metrics.torproject.org/rs.html#search/as:396507), meaning that Tor user's queries are blended with non-Tor exit user's queries, further enhancing DNS privacy.
+Emerald Onion's software configurations are pulled directly from this Github repo, so users can validate for themselves that these privacy settings are enforced. This public DNS service is shared by [Emerald Onion's Tor exit relays](https://metrics.torproject.org/rs.html#search/as:396507), meaning that Tor users' queries are blended with non-Tor exit users' queries, further enhancing DNS privacy.
 
 ### How To Use
 
@@ -42,7 +42,7 @@ Emerald Onion's software configurations are pulled directly from [this Github re
 
 #### Local proxy with Docker
 
-If your system doesn't support DoT, DoH, or DoQ and you don't want to change your stub resolver, you can use our [Docker image for dnsproxy](https://github.com/emeraldonion/docker-dnsproxy) which supports all 3 protocols.
+If your system doesn't support DoT or DoH and you don't want to change your stub resolver, you can use our [Docker image for dnsproxy](https://github.com/emeraldonion/docker-dnsproxy) which supports both protocols.
 
 1. Create and start the container: `docker run -p 127.0.53.53:53:53/udp emeraldonion/docker-dnsproxy`
 2. Update your DNS server to 127.0.53.53
@@ -51,28 +51,14 @@ If your system doesn't support DoT, DoH, or DoQ and you don't want to change you
 
 - [DNS over TLS](https://tools.ietf.org/html/rfc7858) : `tls://dns.emeraldonion.org:853`
 - [DNS over HTTPS](https://tools.ietf.org/html/rfc8484): `https://dns.emeraldonion.org:443`
-- [DNS over QUIC](https://tools.ietf.org/html/draft-ietf-dprive-dnsoquic-02): `quic://dns.emeraldonion.org:8853`
 
 ### Protocols, Pros and Cons
 
-There is not one protocol that is strictly better than the others, but DoH (DNS over HTTPS) seems to be the one that most of the industry is adopting. Emerald Onion is using [draft implementation of DoQ](https://github.com/AdguardTeam/dnsproxy/pull/128), so please only use that for testing.
+There is not one protocol that is strictly better than the others, but DoH (DNS over HTTPS) seems to be the one that most of the industry is adopting.
 
-All 3 supported protocols provide a layer of transport security to protect DNS queries from surveillance. The difference is only in the transport itself; DoT uses TLS, DoH uses HTTPS+TLS, and DoQ uses QUIC+TLS. All protocols use the standard RFC1035 DNS wire format. For more information on how DNS messages work over alternate transports, check out [Cloudflare's 1.1.1.1 documentation](https://developers.cloudflare.com/1.1.1.1/dns-over-https/wireformat). Note: our resolver does not support the JSON message format.
-
-- DoT is the simplest protocol using only an additional TLS layer on top of DNS.
-- DoH is the most widely supported protocol where browsers such as Firefox have built-in DoH support.
-- DoQ is the newest protocol and uses the modern QUIC transport protocol.
+Both protocols provide a layer of transport security to protect DNS queries from surveillance. The difference is only in the transport itself; DoT uses TLS, while DoH uses HTTPS. All protocols use the standard RFC1035 DNS wire format. For more information on how DNS messages work over alternate transports, check out [Cloudflare's 1.1.1.1 documentation](https://developers.cloudflare.com/1.1.1.1/dns-over-https/wireformat). Note: our resolver does not support the JSON message format.
 
 Emerald Onion does not offer vulnerable DNS-over-UDP services.
-
-### Emerald Onion's Server-Side Configuration
-
-We're using [dnsproxy](https://github.com/AdguardTeam/dnsproxy) to proxy DoT, DoH, and DoQ queries to [unbound](https://github.com/NLnetLabs/unbound) as the resolver. On the networking side, we use [BIRD](https://gitlab.nic.cz/labs/bird/tree/master) as a BGP daemon automated with [bcg](https://github.com/natesales/bcg) which converts a simple YAML file into BIRD configs with filtering for IRR, RPKI, and max-prefix limits. Each DNS server announces the same routes making this an anycast service that can be easily scaled out by adding more servers.
-
-If you're interested in running your own service like this, this repo can serve as a quick way to get started. Just edit the Ansible [hosts file](https://github.com/emeraldonion/APRNS/blob/main/hosts.yml) to contain a list of your DNS servers, BGP configuration, and TLS certificate paths, and run `ansible-playbook -i hosts.yml install.yml`. Ansible will install and configure the DNS server with unbound and dnsproxy, and set up BGP session with BIRD and BCG according to the `bcg` key in your Ansible hosts file. The `hosts.yml` file in this repo contains our production config as a starting place, but you'll have to make a few modifications if you're running your own deployment:
-
-1. Replace `tls_cert` and `tls_key` with the path to your TLS certificate and private key.
-2. Replace the `hosts` key with objects for each of your DNS servers, noting `ansible_host` and `bcg` which takes a raw [bcg](https://github.com/natesales/bcg) config in YAML.
 
 ### Legal
 

@@ -6,6 +6,12 @@
         file: packages.yml
         name: packages
 
+    - name: Install wireguard
+      become: true
+      apt:
+        update_cache: true
+        pkg: wireguard
+
     - name: Check if private key exists
       become: true
       stat:
@@ -14,7 +20,7 @@
 
     - name: Generate keypair
       become: true
-      shell: umask 077 ; wg genkey | tee /opt/dns/wg-private | wg pubkey > /opt/dns/wg-public
+      shell: umask 077 && mkdir /opt/dns && wg genkey | tee /opt/dns/wg-private | wg pubkey > /opt/dns/wg-public
       when: not wg_private_stat.stat.exists
 
     - name: Read private key
@@ -88,7 +94,7 @@
         mv /tmp/prometheus-{{ packages.additional.management_prometheus }}.linux-amd64/prometheus /usr/local/bin/prometheus
         mv /tmp/prometheus-{{ packages.additional.management_prometheus }}.linux-amd64/consoles /etc/prometheus/
         mv /tmp/prometheus-{{ packages.additional.management_prometheus }}.linux-amd64/console_libraries /etc/prometheus/
-        chmod -R prometheus:prometheus /etc/prometheus/*
+        chown -R prometheus:prometheus /etc/prometheus/*
       when: not prometheus.stat.exists
 
     - name: Copy hosts file

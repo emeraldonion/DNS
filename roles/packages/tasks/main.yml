@@ -3,26 +3,15 @@
     file: packages.yml
     name: packages
 
-- name: Add natesales apt repo for q DNS client and doqd DNS over QUIC deamon
-  become: true
-  apt_repository:
-    repo: deb [trusted=yes] https://apt.fury.io/natesales/ /
-    state: present
-
 - name: Install knot-resolver repo
   become: true
   apt:
     deb: https://secure.nic.cz/files/knot-resolver/knot-resolver-release.deb
 
-- name: Install odohd
-  become: true
-  apt:
-    deb: "https://github.com/emeraldonion/odohd/releases/download/v{{ packages.additional.odohd }}/odohd_{{ packages.additional.odohd }}_linux_amd64.deb"
-
 - name: Check if nginx_exporter exists
-    stat:
-      path: /usr/local/bin/nginx_exporter
-    register: nginx_exporter
+  stat:
+    path: /usr/local/bin/nginx_exporter
+  register: nginx_exporter
 
 - name: Install nginx_exporter
   become: true

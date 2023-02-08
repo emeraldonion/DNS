@@ -3,6 +3,7 @@
   copy:
     src: /usr/share/dns/root.key
     dest: /var/lib/knot-resolver/root.key
+    remote_src: true
     owner: knot-resolver
     group: knot-resolver
 

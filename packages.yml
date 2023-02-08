@@ -1,16 +1,10 @@
 apt:
-  - q # DNS client for Do{T,Q,H}
   - knot-dnsutils # kdig DNS client
-  - knot-resolver=5.4.1-cznic.1 # knot resolver
-  - knot-resolver-module-http=5.4.1-cznic.1 # knot resolver plugin for HTTP(s)
-  - doqd # DNS over QUIC daemon
-  - lua-luaossl-dev # SSL/TLS for knot-resolver priming query
-  - lua-http # HTTP for knot-resolver priming query
+  - knot-resolver # knot resolver
   - wireguard
   - nginx
 
 additional:
-  odohd: 0.0.3
-  nginx_exporter: 0.9.0
-  node_exporter: 1.2.2
+  nginx_exporter: 0.11.0
+  node_exporter: 1.5.0
   management_prometheus: 2.30.0
